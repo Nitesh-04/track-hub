@@ -50,11 +50,16 @@ model Round {
   timing        DateTime
   venue         String
   link          String?
-  status        String      @default("upcoming")
+  status        Status
   applicationId String
   application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
 
   @@index([applicationId])
+}
+
+enum Status {
+  upcoming
+  completed
 }
