@@ -48,7 +48,6 @@ export default function HowItWorksCarousel() {
         How It Works
       </h2>
       <p
-        id="how-it-works"
         className="mt-4 text-center font-bold text-[#001F3F] block md:hidden w-full mx-auto"
       >
         Swipe <ArrowRight className="inline-block w-4 h-4" />

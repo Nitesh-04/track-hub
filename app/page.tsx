@@ -44,7 +44,7 @@ export default function Home() {
       <div id="features">
         <Features/>
       </div>
-      <div>
+      <div id="how-it-works">
         <HowItWorksCarousel/>
       </div>
     </div>
