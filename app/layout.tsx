@@ -14,7 +14,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "wheredidyouapply?",
+  title: "wheredidyouapply",
   description: "Keep track of your internship applications",
 };
 
