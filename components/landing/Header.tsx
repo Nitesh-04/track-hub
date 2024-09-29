@@ -24,7 +24,7 @@ export default function Header() {
   };
 
   return (
-    <>
+    <div>
       <div
         className={`right-0 hidden font-bold text-lg md:block ${poppins.className}`}
       >
@@ -78,6 +78,6 @@ export default function Header() {
           </button>
         </div>
       )}
-    </>
+    </div>
   );
 }

@@ -39,7 +39,7 @@ export default function Features() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
         {features.map((feature, index) => (
-          <Card key={index} className="text-[#001F3F] bg-[#8dd2f2] border-2 border-[#001F3F] shadow-lg rounded-lg transition-transform hover:scale-105">
+          <Card key={index} className="text-[#001F3F] bg-[#e3e3e3] border-2 border-[#001F3F] shadow-lg rounded-lg transition-transform hover:scale-105">
             <CardHeader>
               <CardTitle className={`text-[#001F3F] flex justify-between text-lg ${poppins.className} font-bold`}>
                 {feature.title}

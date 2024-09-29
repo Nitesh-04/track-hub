@@ -63,7 +63,7 @@ export default function HowItWorksCarousel() {
           {steps.map((step, index) => (
             <CarouselItem key={index}>
               <div className="p-4">
-                <Card className="text-[#001F3F] bg-[#8dd2f2] border-2 border-slate-800 shadow-lg rounded-lg">
+                <Card className="text-[#001F3F] bg-[#e3e3e3] border-2 border-slate-800 shadow-lg rounded-lg">
                   <CardContent className="flex flex-col items-center justify-center p-6">
                     <h3 className="md:text-2xl flex gap-2 md:gap-4 text-lg font-semibold text-[#001F3F] mb-2">
                       {step.title}
