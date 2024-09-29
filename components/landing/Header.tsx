@@ -33,7 +33,7 @@ export default function Header() {
             scrollToSection("features");
             setIsOpen(false); 
           }}
-          className="mr-12 text-[#001F3F] hover:text-black duration-500"
+          className="mr-12 text-[#8dd2f2] hover:text-[#8dd2f2] duration-500"
         >
           Features
         </button>
@@ -42,7 +42,7 @@ export default function Header() {
             scrollToSection("how-it-works");
             setIsOpen(false); 
           }}
-          className="text-[#001F3F] mr-12 hover:text-black duration-500"
+          className="text-[#8dd2f2] mr-6 hover:text-[#8dd2f2] duration-500"
         >
           How it works?
         </button>
@@ -50,20 +50,20 @@ export default function Header() {
       <div className="block md:hidden right-0">
         <button onClick={toggleMenu}>
           {isOpen ? (
-            <Cross1Icon className="w-8 h-8" />
+            <Cross1Icon className="w-8 h-8 text-[#8dd2f2]" />
           ) : (
-            <HamburgerMenuIcon className="w-8 h-8" />
+            <HamburgerMenuIcon className="w-8 h-8 text-[#8dd2f2]" />
           )}
         </button>
       </div>
       {isOpen && (
-        <div className="absolute right-0 mt-10 mr-2 opacity-75 z-10 flex flex-col text-[#001F3F] items-center w-48 bg-[#e7d9b9] shadow-lg rounded-lg transition-all fade-in-70 duration-700">
+        <div className="absolute right-0 mt-12 md:mt-10 mr-2 opacity-75 z-10 flex flex-col text-[#001F3F] items-center w-48 bg-[#c3e3f1] shadow-lg rounded-lg transition-all fade-in-70 duration-700">
           <button
             onClick={() => {
               scrollToSection("features");
               setIsOpen(false); 
             }}
-            className={`block px-4 py-2 ${poppins.className}`}
+            className={`block px-4 py-2 font-bold ${poppins.className}`}
           >
             Features
           </button>
@@ -72,7 +72,7 @@ export default function Header() {
               scrollToSection("how-it-works");
               setIsOpen(false); 
             }}
-            className={`block px-4 py-2 ${poppins.className}`}
+            className={`block px-4 py-2 font-bold ${poppins.className}`}
           >
             How it works?
           </button>

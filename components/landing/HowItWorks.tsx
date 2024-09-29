@@ -12,6 +12,7 @@ import { ArrowRight } from "lucide-react";
 import { Poppins } from "next/font/google";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { LockClosedIcon,FileTextIcon, BellIcon, FilePlusIcon, CrumpledPaperIcon } from "@radix-ui/react-icons";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -21,24 +22,29 @@ const poppins = Poppins({
 export default function HowItWorksCarousel() {
   const steps = [
     {
-      title: "1. Sign in Securely 🛜",
+      title: "1. Sign in Securely",
       description: "Use secure Google authentication to easily sign in.",
+      icon: <LockClosedIcon className="w-6 h-6 text-[#001F3F]"/>,
     },
     {
-      title: "2. Create Applications 🖊️",
+      title: "2. Create Applications",
       description: "Add details about your applications in one place.",
+      icon: <FilePlusIcon className="w-6 h-6 text-[#001F3F]"/>,
     },
     {
-      title: "3. Toggle Reminders 🔕",
+      title: "3. Toggle Reminders",
       description: "Set and toggle reminders for your upcoming applications.",
+      icon: <BellIcon className="w-6 h-6 text-[#001F3F]"/>,
     },
     {
-      title: "4. View Upcoming Applications 📝",
+      title: "4. View Upcoming Events",
       description: "Easily view all your upcoming application deadlines.",
+      icon: <FileTextIcon className="w-6 h-6 text-[#001F3F]"/>,
     },
     {
-      title: "5. Edit or Delete Applications 🚮",
+      title: "5. Edit or Delete Applications",
       description: "To add or remove applications, simply edit or delete them.",
+      icon: <CrumpledPaperIcon className="w-6 h-6 text-[#001F3F]"/>,
     },
   ];
 
@@ -57,12 +63,13 @@ export default function HowItWorksCarousel() {
           {steps.map((step, index) => (
             <CarouselItem key={index}>
               <div className="p-4">
-                <Card className="bg-[#ebdbb6] border-2 border-[#001F3F] shadow-lg rounded-lg transition-transform hover:scale-95">
+                <Card className="bg-[#8dd2f2] bg-opacity-35 border-2 border-[#001F3F] shadow-lg rounded-lg">
                   <CardContent className="flex flex-col items-center justify-center p-6">
-                    <h3 className="text-2xl font-semibold text-[#001F3F] mb-2">
+                    <h3 className="md:text-2xl flex gap-2 md:gap-4 text-lg font-semibold text-[#001F3F] mb-2">
                       {step.title}
+                      {step.icon}
                     </h3>
-                    <p className="text-center text-lg text-gray-700">
+                    <p className="text-center md:text-lg text-gray-700">
                       {step.description}
                     </p>
                   </CardContent>
@@ -71,8 +78,8 @@ export default function HowItWorksCarousel() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="hidden md:flex text-[#001F3F] bg-[#EAD8B1] border-[#001F3F] hover:bg-[#EAD8B1]" />
-        <CarouselNext className="hidden md:flex text-[#001F3F] bg-[#EAD8B1] border-[#001F3F] hover:bg-[#EAD8B1]" />
+        <CarouselPrevious className="hidden md:flex  border-[#001F3F] text-[#b1ddf1] bg-[#001F3F] hover:text-[#b1ddf1] hover:bg-[#001F3F]" />
+        <CarouselNext className="hidden md:flex  border-[#001F3F] text-[#b1ddf1] bg-[#001F3F] hover:text-[#b1ddf1] hover:bg-[#001F3F]" />
       </Carousel>
       <Link href={"/sign-up"} className="z-10 relative w-full block mx-auto text-center md:mt-8">
         <Button className="bg-[#001F3F]">Get Started</Button>
