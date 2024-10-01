@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Cross1Icon, HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { Poppins } from "next/font/google";
 
@@ -57,7 +57,7 @@ export default function Header() {
         </button>
       </div>
       {isOpen && (
-        <div className="absolute right-0 mt-12 md:mt-10 mr-2 opacity-75 z-10 flex flex-col text-[#001F3F] items-center w-48 bg-[#c3e3f1] shadow-lg rounded-lg transition-all fade-in-70 duration-700">
+        <div className="absolute right-0 mt-4 md:mt-10 mr-2 opacity-75 z-10 flex flex-col text-[#001F3F] items-center w-48 bg-[#c3e3f1] shadow-lg rounded-lg transition-all fade-in-70 duration-700">
           <button
             onClick={() => {
               scrollToSection("features");

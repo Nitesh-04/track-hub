@@ -23,25 +23,26 @@ export default function Home() {
         className="absolute inset-0 z-0"
         numSquares={500}
         repeatDelay={0.5}
-        duration={1}
+        duration={0.75}
         maxOpacity={0.15}
       />
-      <header className="relative flex bg-[#001F3F] z-10 justify-between px-10 py-2">
-        <NotebookPenIcon className="text-[#8dd2f2] md:mt-0 mt-1"/>
+      <header className="relative flex bg-[#001F3F] z-10 justify-between px-6 md:px-10 py-2">
+        <p className={`text-[#8dd2f2] md:mt-0 mt-1 font-bold text-lg ${poppins.className}`}>Where Did You Apply</p>
           <Header/>
       </header>
-      <div className="relative z-10 mt-56 md:mt-28 mb-56 md:mb-48 px-8 md:px-20 flex items-center justify-center md:gap-20">
+      <div className="relative z-10 min-h-screen flex px-10 items-center justify-center lg:gap-20">
         <div className={` w-full ${poppins.className} flex flex-col items-center justify-center`}>
-          <div className="flex flex-col items-center justify-center text-center font-bold text-4xl md:text-6xl">
-            <WordFadeIn className="text-[#18426d]" words="Where Did You Apply ?" delay={0.25}/>
-            <p className={` text-[#001F3F] text-sm  md:text-lg mt-5 md:mt-0 mb-2 ${poppins.className}`}>Your ultimate destination for tracking internship applications.</p>
+          <div className="flex text-[#18426d] flex-col items-center justify-center text-center font-bold text-4xl md:text-6xl">
+            <p className="text-5xl">Track your <span className="text-[#47829d]">journey</span></p>
+            <p className="text-5xl"><span className="text-[#47829d]">to success</span> with ease.</p>
+            <p className={` text-[#001F3F] text-sm md:text-lg mt-5 mb-2 ${poppins.className}`}>Your ultimate destination for tracking internship applications.</p>
             <Link href={"/sign-up"} className="">
               <Button className="bg-[#001F3F]">Get Started</Button>
             </Link>
           </div>
         </div>
         <div>
-          <Image className="hidden md:block" height={800} width={800} src="./hero.svg" alt="Landing Page Image"/>
+          <Image className="hidden md:hidden lg:block" height={1000} width={1000} src="./hero.svg" alt="Landing Page Image"/>
         </div>
       </div>
       <div id="features">

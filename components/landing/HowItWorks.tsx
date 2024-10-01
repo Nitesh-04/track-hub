@@ -54,7 +54,7 @@ export default function HowItWorksCarousel() {
         How It Works
       </h2>
       <p
-        className="mt-4 text-center font-bold text-[#001F3F] block md:hidden w-full mx-auto"
+        className="mt-4 text-center font-bold text-[#001F3F] block md:block lg:hidden w-full mx-auto"
       >
         Swipe <ArrowRight className="inline-block w-4 h-4" />
       </p>
@@ -78,8 +78,8 @@ export default function HowItWorksCarousel() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="hidden md:flex  border-[#001F3F] text-[#b1ddf1] bg-[#001F3F] hover:text-[#b1ddf1] hover:bg-[#001F3F]" />
-        <CarouselNext className="hidden md:flex  border-[#001F3F] text-[#b1ddf1] bg-[#001F3F] hover:text-[#b1ddf1] hover:bg-[#001F3F]" />
+        <CarouselPrevious className="hidden md:hidden lg:flex  border-[#001F3F] text-[#b1ddf1] bg-[#001F3F] hover:text-[#b1ddf1] hover:bg-[#001F3F]" />
+        <CarouselNext className="hidden md:hidden lg:flex  border-[#001F3F] text-[#b1ddf1] bg-[#001F3F] hover:text-[#b1ddf1] hover:bg-[#001F3F]" />
       </Carousel>
       <Link href={"/sign-up"} className="z-10 relative w-full block mx-auto text-center md:mt-8">
         <Button className="bg-[#001F3F]">Get Started</Button>
