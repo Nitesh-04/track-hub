@@ -21,7 +21,7 @@ export default function Home() {
     <div className="min-h-screen relative w-full bg-[#e3e3e3]">
       <GridPattern
         className="absolute inset-0 z-0"
-        numSquares={500}
+        numSquares={1000}
         repeatDelay={0.5}
         duration={0.75}
         maxOpacity={0.15}
