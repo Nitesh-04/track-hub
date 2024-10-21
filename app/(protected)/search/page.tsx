@@ -2,7 +2,7 @@ import Header from "@/components/header/Header";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 
-export default function View() {
+export default function Search() {
   return (
     <div className="h-full w-full">
       <div className="bg-[#001F3F] ">
