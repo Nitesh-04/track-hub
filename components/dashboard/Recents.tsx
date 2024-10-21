@@ -15,9 +15,9 @@ const poppins = Poppins({
 
 export default function Recents() {
   return (
-    <div className="mt-8 md:px-14 px-2 md:w-3/4">
+    <div className="md:mt-8 mt-2 md:px-14 py-2 px-2 md:w-3/4">
       <p
-        className={` font-bold text-[#001F3F] text-xl md:text-2xl mb-4 ${poppins.className}`}
+        className={`font-bold text-[#001F3F] text-xl md:text-2xl mb-4 ${poppins.className}`}
       >
         Recents
       </p>
@@ -27,7 +27,7 @@ export default function Recents() {
           {Array.from({ length: 5 }).map((_, index) => (
             <CarouselItem key={index} className="md:basis-1/2">
               <div className="p-1">
-                <Card className="w-full h-40">
+                <Card className="w-full h-40 transition-transform hover:scale-95 border-[#001F3F]">
                   <CardContent className="flex h-40 items-center justify-center p-6">
                     <span className="text-4xl font-semibold">{index + 1}</span>
                   </CardContent>
