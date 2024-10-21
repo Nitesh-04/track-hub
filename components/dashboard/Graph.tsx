@@ -34,8 +34,8 @@ const chartConfig = {
 
 export default function Graph() {
   return (
-    <div className="md:h-36 md:w-60 md:mt-10 h-16 w-4/5 mt-16 mx-auto md:block hidden">
-      <Card>
+    <div className="h-36 w-60 mt-4 mx-auto md:block hidden z-20">
+      <Card className="border-[#001F3F]">
         <CardHeader>
           <CardTitle>Applications Tracker</CardTitle>
           <CardDescription>Statiscal view</CardDescription>

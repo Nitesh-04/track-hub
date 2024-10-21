@@ -15,7 +15,7 @@ const poppins = Poppins({
 
 export default function Recents() {
   return (
-    <div className="md:mt-8 mt-2 md:px-14 py-2 px-2 md:w-3/4">
+    <div className=" mt-2 md:px-14 py-2 px-2 md:w-3/4 z-20">
       <p
         className={`font-bold text-[#001F3F] text-xl md:text-2xl mb-4 ${poppins.className}`}
       >

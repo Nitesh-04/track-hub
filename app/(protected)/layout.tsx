@@ -8,7 +8,7 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
     return (
-        <div className="bg-slate-50 min-h-screen    relative">
+        <div className="bg-slate-50 min-h-screen relative">
             <GridPattern
                 className="absolute inset-0 z-0 opacity-55"
                 numSquares={1000}
@@ -18,7 +18,7 @@ export default function Layout({ children }: LayoutProps) {
             />
             <Sidebar />
             <div className="flex flex-col flex-1 lg:ml-28 relative z-20">
-                <main className="flex-1 overflow-auto p-4 mt-5 mb-20 lg:mb-0">
+                <main className="flex-1 overflow-auto mt-5 min-h-screen">
                     {children}
                 </main>
             </div>

@@ -17,7 +17,7 @@ const poppins = Poppins({
 
 export default function Upcoming() {
   return (
-    <div className="md:px-14 md:py-2 py-0 px-2 pt-2 ">
+    <div className="md:px-14 md:py-2 py-0 px-2 pt-2 mt-14">
         <p className={`font-bold text-[#001F3F] text-xl md:text-2xl mb-4 ${poppins.className}`}>Upcoming events</p>
       <Carousel
         opts={{
