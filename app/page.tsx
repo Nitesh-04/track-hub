@@ -1,11 +1,9 @@
 import GridPattern from "@/components/ui/animated-grid-pattern";
-import WordFadeIn from "@/components/ui/word-fade-in";
 import { Poppins } from "next/font/google";
 import Features from "@/components/landing/Features";
 import Header from "@/components/landing/Header";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { NotebookPenIcon } from "lucide-react";
 import HowItWorksCarousel from "@/components/landing/HowItWorks";
 import Image from "next/image";
 
@@ -26,8 +24,7 @@ export default function Home() {
         duration={0.75}
         maxOpacity={0.15}
       />
-      <header className="relative flex bg-[#001F3F] z-10 justify-between px-6 md:px-10 py-2">
-        <p className={`text-[#8dd2f2] md:mt-0 mt-1 font-bold text-lg ${poppins.className}`}>Where Did You Apply</p>
+      <header className="relative bg-[#001F3F] z-10 px-6 md:px-10 py-2">
           <Header/>
       </header>
       <div className="relative z-10 min-h-screen flex px-10 items-center justify-center lg:gap-20">

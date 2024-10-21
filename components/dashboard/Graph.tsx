@@ -34,10 +34,10 @@ const chartConfig = {
 
 export default function Graph() {
   return (
-    <div className="md:px-10 md:py-0 px-16 py-10 pb-40 md:mt-4">
+    <div className="md:h-36 md:w-60 md:mt-10 h-16 w-4/5 mt-16 mx-auto md:block hidden">
       <Card>
         <CardHeader>
-          <CardTitle>Applications Created / Updated</CardTitle>
+          <CardTitle>Applications Tracker</CardTitle>
           <CardDescription>Statiscal view</CardDescription>
         </CardHeader>
         <CardContent>

@@ -24,7 +24,8 @@ export default function Header() {
   };
 
   return (
-    <div>
+    <div className="flex justify-between">
+      <p className={`text-[#8dd2f2] md:mt-0 mt-1 font-bold text-lg ${poppins.className}`}>Where Did You Apply</p>
       <div
         className={`right-0 hidden font-bold text-lg md:block ${poppins.className}`}
       >
