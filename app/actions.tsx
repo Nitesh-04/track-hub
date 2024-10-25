@@ -14,7 +14,7 @@ type ApplicationData = {
 
 export async function createApplication(FormData : ApplicationData,userId:string)
 {
-    await prisma.application.create({
+    const createdApplication = await prisma.application.create({
         data: {
             companyName: FormData.companyName,
             stipend: FormData.stipend,
@@ -25,5 +25,14 @@ export async function createApplication(FormData : ApplicationData,userId:string
             notifications: FormData.notifications,
             userId: userId
         }
+    });
+
+    return createdApplication.id;
+}
+
+export async function fetchApplicationbyId(id:string)
+{
+    return await prisma.application.findUnique({
+        where: {id}
     });
 }

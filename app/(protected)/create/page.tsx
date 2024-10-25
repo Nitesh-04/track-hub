@@ -7,13 +7,17 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Poppins } from 'next/font/google';
 import { createApplication } from "@/app/actions";
+import { redirect } from "next/navigation";
+import Link from "next/link";
 
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "700"],
 });
 
+
 export default function Create() {
+
   const [companyName, setCompanyName] = useState("");
   const [stipend, setStipend] = useState("");
   const [role, setRole] = useState("");
@@ -21,6 +25,9 @@ export default function Create() {
   const [locations, setLocations] = useState("");
   const [links, setLinks] = useState("");
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
+  const [enableView,setenableView] = useState(true);
+
+  const [viewapplicationId, setviewApplicationId] = useState("");
 
   async function handleSubmit(e:any) {
     e.preventDefault();
@@ -35,8 +42,17 @@ export default function Create() {
     };
 
     const userId="1010";
-
-    await createApplication(formData, userId);
+    
+    try
+    {
+      const applicationId = await createApplication(formData, userId);
+      setviewApplicationId(applicationId);
+      setenableView(false);
+    }
+    catch(err)
+    {
+        console.log(err);
+    }
     
     setCompanyName("");
     setStipend("");
@@ -123,7 +139,7 @@ export default function Create() {
               />
             </div>
           </div>
-          <div className="flex md:flex-row flex-col gap-10 justify-between items-center md:pb-0 pb-20">
+          <div className="flex md:flex-row flex-col gap-10 justify-between items-center">
             <div className="flex items-center space-x-2">
               <Switch
                 id="notifications"
@@ -134,10 +150,11 @@ export default function Create() {
             </div>
             <Button type="submit" className="bg-[#001F3F] hover:bg-[#003366]">Create Application</Button>
           </div>
-          <div>
+          <div className="flex md:flex-row flex-col gap-10 justify-between items-center md:pb-0 pb-20">
             <p className={`text-[#001F3F] ${poppins.className} text-xs`}>
               Note: you can add rounds in application after clicking create application
             </p>
+            <Link href={`view/${viewapplicationId}`}><Button disabled={enableView} type="button" className="bg-[#001F3F] hover:bg-[#003366]">View Application</Button></Link>
           </div>
         </form>
       </div>
