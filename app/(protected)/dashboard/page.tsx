@@ -1,7 +1,7 @@
-import Graph from "@/components/dashboard/Graph";
-import Recents from "@/components/dashboard/Recents";
-import Upcoming from "@/components/dashboard/Upcoming";
-import Header from "@/components/header/Header";
+import Graph from "@/app/_components/dashboard/Graph";
+import Recents from "@/app/_components/dashboard/Recents";
+import Upcoming from "@/app/_components/dashboard/Upcoming";
+import Header from "@/app/_components/header/Header";
 
 export default function Dashboard() {
   return (

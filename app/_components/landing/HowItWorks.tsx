@@ -11,7 +11,7 @@ import {
 import { ArrowRight } from "lucide-react";
 import { Poppins } from "next/font/google";
 import Link from "next/link";
-import { Button } from "../ui/button";
+import { Button } from "../../../components/ui/button";
 import { LockClosedIcon,FileTextIcon, BellIcon, FilePlusIcon, CrumpledPaperIcon } from "@radix-ui/react-icons";
 
 const poppins = Poppins({

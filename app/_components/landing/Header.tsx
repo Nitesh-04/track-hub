@@ -16,37 +16,26 @@ export default function Header() {
     setIsOpen(!isOpen);
   };
 
-  const scrollToSection = (id:string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
   return (
     <div className="flex justify-between">
-      <p className={`text-[#8dd2f2] md:mt-0 mt-1 font-bold text-lg ${poppins.className}`}>Where Did You Apply</p>
+      <p
+        className={`text-[#8dd2f2] md:mt-0 mt-1 font-bold text-lg ${poppins.className}`}
+      >
+        Where Did You Apply
+      </p>
       <div
         className={`right-0 hidden font-bold text-lg md:block ${poppins.className}`}
       >
-        <button
-          onClick={() => {
-            scrollToSection("features");
-            setIsOpen(false); 
-          }}
-          className="mr-12 text-[#8dd2f2] hover:text-[#8dd2f2] duration-500"
-        >
-          Features
-        </button>
-        <button
-          onClick={() => {
-            scrollToSection("how-it-works");
-            setIsOpen(false); 
-          }}
-          className="text-[#8dd2f2] mr-6 hover:text-[#8dd2f2] duration-500"
-        >
-          How it works?
-        </button>
+        <a href="#features">
+          <button className="mr-12 text-[#8dd2f2] hover:text-[#8dd2f2] duration-500">
+            Features{" "}
+          </button>
+        </a>
+        <a href="#how-it-works">
+          <button className="text-[#8dd2f2] mr-6 hover:text-[#8dd2f2] duration-500">
+            How it works?
+          </button>
+        </a>
       </div>
       <div className="block md:hidden right-0">
         <button onClick={toggleMenu}>
@@ -59,24 +48,17 @@ export default function Header() {
       </div>
       {isOpen && (
         <div className="absolute right-0 mt-4 md:mt-10 mr-2 opacity-75 z-10 flex flex-col text-[#001F3F] items-center w-48 bg-[#c3e3f1] shadow-lg rounded-lg transition-all fade-in-70 duration-700">
-          <button
-            onClick={() => {
-              scrollToSection("features");
-              setIsOpen(false); 
-            }}
+          <a href="features"><button
             className={`block px-4 py-2 font-bold ${poppins.className}`}
           >
             Features
-          </button>
-          <button
-            onClick={() => {
-              scrollToSection("how-it-works");
-              setIsOpen(false); 
-            }}
+          </button></a>
+          <a href="#how-it-works"><button
             className={`block px-4 py-2 font-bold ${poppins.className}`}
           >
             How it works?
           </button>
+          </a>
         </div>
       )}
     </div>

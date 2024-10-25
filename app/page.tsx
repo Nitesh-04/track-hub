@@ -1,10 +1,10 @@
 import GridPattern from "@/components/ui/animated-grid-pattern";
 import { Poppins } from "next/font/google";
-import Features from "@/components/landing/Features";
-import Header from "@/components/landing/Header";
+import Features from "@/app/_components/landing/Features";
+import Header from "@/app/_components/landing/Header";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import HowItWorksCarousel from "@/components/landing/HowItWorks";
+import HowItWorksCarousel from "@/app/_components/landing/HowItWorks";
 import Image from "next/image";
 
 const poppins = Poppins({
@@ -33,7 +33,7 @@ export default function Home() {
             <p className="text-5xl">Track your <span className="text-[#47829d]">journey</span></p>
             <p className="text-5xl"><span className="text-[#47829d]">to success</span> with ease.</p>
             <p className={` text-[#001F3F] text-sm md:text-lg mt-5 mb-2 ${poppins.className}`}>Your ultimate destination for tracking internship applications.</p>
-            <Link href={"/sign-up"} className="">
+            <Link href={"/sign-up"}>
               <Button className="bg-[#001F3F]">Get Started</Button>
             </Link>
           </div>

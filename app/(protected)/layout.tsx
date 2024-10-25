@@ -1,4 +1,4 @@
-import Sidebar from "@/components/sidebar/Sidebar";
+import Sidebar from "@/app/_components/sidebar/Sidebar";
 import GridPattern from "@/components/ui/animated-grid-pattern";
 import { ReactNode } from "react";
 

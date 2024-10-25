@@ -1,4 +1,4 @@
-import Header from "@/components/header/Header";
+import Header from "@/app/_components/header/Header";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 

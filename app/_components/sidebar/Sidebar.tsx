@@ -23,7 +23,7 @@ export default function Sidebar() {
               const isActive = pathname === item.href;
               return (
                 <li key={index} className="transition-transform hover:scale-105">
-                  <Link href={item.href} className="group flex flex-col items-center">
+                  <Link href={item.href} className="group flex flex-col items-center" prefetch={true}>
                     <div className={`p-3 rounded-full ${isActive ? "bg-blue-100" : "bg-white group-hover:bg-blue-100"} transition-colors duration-200`}>
                       <item.icon className={`w-6 h-6 ${isActive ? "text-blue-500" : "text-gray-600 group-hover:text-blue-500"}`} />
                     </div>
