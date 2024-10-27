@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Poppins } from 'next/font/google';
 import { createApplication } from "@/app/actions";
-import { redirect } from "next/navigation";
 import Link from "next/link";
 
 const poppins = Poppins({
@@ -152,7 +151,7 @@ export default function Create() {
           </div>
           <div className="flex md:flex-row flex-col gap-10 justify-between items-center md:pb-0 pb-20">
             <p className={`text-[#001F3F] ${poppins.className} text-xs`}>
-              Note: you can add rounds in application after clicking create application
+              Note: you can add rounds in application after creating an application.
             </p>
             <Link href={`view/${viewapplicationId}`}><Button disabled={enableView} type="button" className="bg-[#001F3F] hover:bg-[#003366]">View Application</Button></Link>
           </div>
