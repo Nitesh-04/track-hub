@@ -59,7 +59,7 @@ export async function createRound(FormData: RoundData, applicationId: string, us
 }
 
 export async function fetchApplicationById(id: string) {
-    return await prisma.application.findUnique({
+    const data = await prisma.application.findUnique({
         where: { id },
         include: { rounds: true }
     });
