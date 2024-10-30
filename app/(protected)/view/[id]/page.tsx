@@ -11,11 +11,12 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { CalendarIcon, Link as LinkIcon, MapPinIcon, PlusCircle, CircleDot } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Poppins } from "next/font/google";
-import { fetchApplicationById, createRound, RoundData, fetchRoundByApplicationId } from "@/app/actions";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { fetchApplicationById, createRound, RoundData, ApplicationData, fetchRoundByApplicationId } from "@/app/actions";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
+import EditRound from "@/app/_components/view/editRound";
+import EditApplication from "@/app/_components/view/editApplication";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -29,7 +30,7 @@ interface Application {
   ctc: number | null;
   role: string;
   location: string;
-  link?: string | null;
+  link: string | null;
   notifications: boolean;
   userId: string;
   createdAt: Date;
@@ -101,6 +102,20 @@ export default function ApplicationView({
     fetchData();
   }, [applicationId]);
 
+  async function fetchRoundData() {
+    const roundsData = await fetchRoundByApplicationId(applicationId);
+    const typedRoundsData = roundsData.map((round) => ({
+      ...round,
+      status: round.status as "upcoming" | "completed",
+    }));
+    setRounds(typedRoundsData);
+  }
+
+  async function fetchApplicationData() {
+    const applicationData = await fetchApplicationById(applicationId);
+    setApplication(applicationData);
+  }
+
   async function handleAddRound(e: any) {
     e.preventDefault();
 
@@ -159,7 +174,7 @@ export default function ApplicationView({
       <div className="mb-8 bg-[#001F3F]">
         <Header />
       </div>
-      <div className="container mx-auto px-4 md:px-8 py-8">
+      <div className="container mx-auto px-4 md:px-8 py-7">
         <h2
           className={`text-2xl font-semibold mb-4 text-[#001F3F] ${poppins.className}`}
         >
@@ -172,6 +187,7 @@ export default function ApplicationView({
                 {" "}
                 {application.companyName}
               </h2>
+              <p className="flex justify-end">
               {application.link && (
                 <div className="col-span-2">
                   <Link
@@ -185,6 +201,8 @@ export default function ApplicationView({
                   </Link>
                 </div>
               )}
+              <EditApplication application={application} onUpdate={fetchApplicationData} />
+              </p>
             </p>
             <Badge className="bg-[#001F3F] text-white mb-2">
               <MapPinIcon className="w-3 h-3 mr-2" />
@@ -327,6 +345,7 @@ export default function ApplicationView({
               <CardContent className="px-6 py-4">
                 <p className="text-xl font-semibold text-[#001F3F] flex justify-between">
                   <p>{round.roundTitle}</p>
+                  <p className="flex justify-end">
                   {round.roundLink && (
                     <div className="mt-2">
                       <Link
@@ -335,10 +354,12 @@ export default function ApplicationView({
                         rel="noopener noreferrer"
                         className="text-[#001F3F] hover:underline"
                       >
-                        <LinkIcon className="mr-1 h-4 w-4" />
+                        <LinkIcon className="mr-4 h-4 w-4" />
                       </Link>
                     </div>
                   )}
+                  <EditRound round={round} onUpdate={fetchRoundData} />
+                  </p>
                 </p>
 
                 <div className="mt-2">

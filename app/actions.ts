@@ -1,9 +1,8 @@
 "use server"
 
 import prisma from "@/utils/db";
-import { revalidatePath } from "next/cache";
 
-type ApplicationData = {
+export type ApplicationData = {
     companyName: string;
     stipend: number;
     role: string;
@@ -57,7 +56,6 @@ export async function createRound(formData: RoundData, applicationId: string, us
                 userId: userId
             }
         });
-        revalidatePath(`/view/${applicationId}`);
     } catch (error) {
         console.error("Error creating round:", error);
         throw new Error("Failed to create round");
@@ -120,5 +118,65 @@ export async function fetchRoundsByUser(userId: string) {
     } catch (error) {
         console.error("Error fetching user rounds:", error);
         throw new Error("Failed to fetch user rounds");
+    }
+}
+
+export async function updateApplication(id: string, formData: ApplicationData) {
+    try {
+        await prisma.application.update({
+            where: { id },
+            data: {
+                companyName: formData.companyName,
+                stipend: formData.stipend,
+                role: formData.role,
+                ctc: formData.ctc,
+                location: formData.location,
+                link: formData.link,
+                notifications: formData.notifications
+            }
+        });
+    } catch (error) {
+        console.error("Error updating application:", error);
+        throw new Error("Failed to update application");
+    }
+}
+
+export async function updateRound(id: string, formData: RoundData) {
+    try {
+        await prisma.round.update({
+            where: { id },
+            data: {
+                roundTitle: formData.roundTitle,
+                roundDateTime: new Date(formData.roundDateTime),
+                venue: formData.venue,
+                roundLink: formData.roundLink,
+                status: formData.status
+            }
+        });
+    } catch (error) {
+        console.error("Error updating round:", error);
+        throw new Error("Failed to update round");
+    }
+}
+
+export async function deletedApplication(id: string) {
+    try {
+        await prisma.application.delete({
+            where: { id }
+        });
+    } catch (error) {
+        console.error("Error deleting application:", error);
+        throw new Error("Failed to delete application");
+    }
+}
+
+export async function deleteRound(id: string) {
+    try {
+        await prisma.round.delete({
+            where: { id }
+        });
+    } catch (error) {
+        console.error("Error deleting round:", error);
+        throw new Error("Failed to delete round");
     }
 }
