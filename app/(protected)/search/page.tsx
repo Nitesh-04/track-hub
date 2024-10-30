@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { fetchApplicationByUser } from "@/app/actions";
-import { Link as LinkIcon,Bell,BellOff } from "lucide-react";
+import { Link as LinkIcon,Bell,BellOff, MapPinIcon } from "lucide-react";
 import Link from "next/link";
 
 interface Application {
@@ -54,18 +54,21 @@ export default function Search() {
                 </div>
                 <div className="flex space-x-2 mt-2">
                   <Badge className="bg-[#001F3F] text-slate-100">{application.role}</Badge>
-                  <Badge className="bg-[#001F3F] text-slate-100">{application.location}</Badge>
+                  <Badge className="bg-[#001F3F] text-slate-100"><MapPinIcon className="w-3 h-3 mr-2"/>{application.location}</Badge>
                 </div>
                 <div className="mt-4">
-                  <p>CTC: {application.ctc ? `₹${application.ctc}` : "Not provided"}</p>
+                  <p>Stipend: {application.stipend? `₹${application.stipend} / month` : "N/A"}</p>
                 </div>
-                {application.link && (
-                  <div className="mt-2 flex justify-end">
+                <div className="mt-2 flex justify-between">
+                  <p className="text-sm">CTC: {application.ctc ? `₹${application.ctc}` : "N/A"}</p>
+                  {application.link && (
+                  <div className="flex justify-end">
                     <LinkIcon href={application.link} className="text-[#001F3F]">
                       View Application
                     </LinkIcon>
                   </div>
                 )}
+                </div>
               </CardContent>
             </Card>
             </Link>

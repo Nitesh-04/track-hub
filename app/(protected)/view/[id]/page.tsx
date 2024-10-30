@@ -5,34 +5,13 @@ import Header from "@/app/_components/header/Header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import {
-  CalendarIcon,
-  Link as LinkIcon,
-  MapIcon,
-  MapPinIcon,
-  PlusCircle,
-} from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { CalendarIcon, Link as LinkIcon, MapPinIcon, PlusCircle, CircleDot } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Poppins } from "next/font/google";
-import {
-  fetchApplicationById,
-  createRound,
-  RoundData,
-  fetchRoundByApplicationId,
-} from "@/app/actions";
+import { fetchApplicationById, createRound, RoundData, fetchRoundByApplicationId } from "@/app/actions";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -121,7 +100,7 @@ export default function ApplicationView({
     fetchData();
   }, [applicationId]);
 
-  async function handleAddRound(e:any) {
+  async function handleAddRound(e: any) {
     e.preventDefault();
 
     if (!date || !newRound.roundTitle || !time) {
@@ -221,7 +200,8 @@ export default function ApplicationView({
               )}
             </p>
             <Badge className="bg-[#001F3F] text-white mb-2">
-              <MapPinIcon className="w-3 h-3 mr-2"/><p>{application.location}</p>
+              <MapPinIcon className="w-3 h-3 mr-2" />
+              <p>{application.location}</p>
             </Badge>
             <div className="flex justify-between gap-10 mt-5">
               <div>
@@ -250,7 +230,10 @@ export default function ApplicationView({
 
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger asChild>
-            <Button variant="outline" className="mb-6 bg-[#001F3F] text-white hover:bg-[#001F3F] hover:text-white">
+            <Button
+              variant="outline"
+              className="mb-6 bg-[#001F3F] text-white hover:bg-[#001F3F] hover:text-white"
+            >
               <PlusCircle className="mr-2 h-4 w-4" /> Add Rounds
             </Button>
           </DialogTrigger>
@@ -259,86 +242,86 @@ export default function ApplicationView({
               <DialogTitle>Add New Round</DialogTitle>
             </DialogHeader>
             <form onSubmit={handleAddRound}>
-            <div className="grid gap-4 py-4">
-              <div>
-                <Label htmlFor="roundTitle">Round Title</Label>
-                <Input
-                  id="roundTitle"
-                  value={newRound.roundTitle}
-                  onChange={(e) =>
-                    setNewRound({ ...newRound, roundTitle: e.target.value })
-                  }
-                  required
-                />
+              <div className="grid gap-4 py-4">
+                <div>
+                  <Label htmlFor="roundTitle">Round Title</Label>
+                  <Input
+                    id="roundTitle"
+                    value={newRound.roundTitle}
+                    onChange={(e) =>
+                      setNewRound({ ...newRound, roundTitle: e.target.value })
+                    }
+                    required
+                  />
+                </div>
+                <div>
+                  <Label>Date</Label>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className={cn(
+                          "w-full justify-start text-left",
+                          !date && "text-muted-foreground"
+                        )}
+                      >
+                        {date ? format(date, "PPP") : <span>Select Date</span>}
+                        <CalendarIcon className="ml-auto h-4 w-4" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={date}
+                        onSelect={setDate}
+                        initialFocus
+                        disabled={(date) =>
+                          date < new Date(new Date().setHours(0, 0, 0, 0))
+                        }
+                        required
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+                <div>
+                  <Label htmlFor="time">Time</Label>
+                  <Input
+                    id="time"
+                    type="time"
+                    value={time}
+                    onChange={(e) => setTime(e.target.value)}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="venue">Venue</Label>
+                  <Input
+                    id="venue"
+                    value={newRound.venue}
+                    onChange={(e) =>
+                      setNewRound({ ...newRound, venue: e.target.value })
+                    }
+                    required
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="roundLink">Round Link</Label>
+                  <Input
+                    id="roundLink"
+                    value={newRound.roundLink}
+                    onChange={(e) =>
+                      setNewRound({ ...newRound, roundLink: e.target.value })
+                    }
+                    required
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  className="w-full bg-[#001F3F] hover:bg-slate-700"
+                >
+                  Add Round
+                </Button>
               </div>
-              <div>
-                <Label>Date</Label>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className={cn(
-                        "w-full justify-start text-left",
-                        !date && "text-muted-foreground"
-                      )}
-                    >
-                      {date ? format(date, "PPP") : <span>Select Date</span>}
-                      <CalendarIcon className="ml-auto h-4 w-4" />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      mode="single"
-                      selected={date}
-                      onSelect={setDate}
-                      initialFocus
-                      disabled={(date) =>
-                        date < new Date(new Date().setHours(0, 0, 0, 0))
-                      }
-                      required
-                    />
-                  </PopoverContent>
-                </Popover>
-              </div>
-              <div>
-                <Label htmlFor="time">Time</Label>
-                <Input
-                  id="time"
-                  type="time"
-                  value={time}
-                  onChange={(e) => setTime(e.target.value)}
-                  required
-                />
-              </div>
-              <div>
-                <Label htmlFor="venue">Venue</Label>
-                <Input
-                  id="venue"
-                  value={newRound.venue}
-                  onChange={(e) =>
-                    setNewRound({ ...newRound, venue: e.target.value })
-                  }
-                  required
-                />
-              </div>
-              <div>
-                <Label htmlFor="roundLink">Round Link</Label>
-                <Input
-                  id="roundLink"
-                  value={newRound.roundLink}
-                  onChange={(e) =>
-                    setNewRound({ ...newRound, roundLink: e.target.value })
-                  }
-                  required
-                />
-              </div>
-              <Button
-              type="submit"
-              className="w-full bg-[#001F3F] hover:bg-slate-700"
-            >
-              Add Round
-            </Button>
-            </div>
             </form>
           </DialogContent>
         </Dialog>
@@ -354,7 +337,7 @@ export default function ApplicationView({
               key={round.id}
               className="w-full h-auto border-[#001F3F] shadow-md"
             >
-              <CardContent className="p-6">
+              <CardContent className="px-6 py-4">
                 <p className="text-xl font-semibold text-[#001F3F] flex justify-between">
                   <p>{round.roundTitle}</p>
                   {round.roundLink && (
@@ -373,12 +356,22 @@ export default function ApplicationView({
 
                 <div className="mt-2">
                   <Badge className="bg-[#001F3F] text-white">
-                  <MapPinIcon className="w-3 h-3 mr-2"/><p>{round.venue}</p>
+                    <MapPinIcon className="w-3 h-3 mr-2" />
+                    <p>{round.venue}</p>
                   </Badge>
                 </div>
 
                 <p className="text-gray-600 text-sm mt-2">
                   {format(new Date(round.roundDateTime), "PPpp")}
+                </p>
+                <p
+                  className={`text-sm mt-2 flex justify-end ${
+                    round.status === "upcoming"
+                      ? "text-green-600"
+                      : "text-gray-800"
+                  }`}
+                >
+                  <CircleDot className="w-3 h-3 mr-2 mt-1"/> {round.status === "upcoming" ? "Upcoming" : "Completed"}
                 </p>
               </CardContent>
             </Card>
