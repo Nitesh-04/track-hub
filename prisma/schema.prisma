@@ -64,10 +64,3 @@ enum Status {
   upcoming
   completed
 }
-
-// UPCOMING AND RECENTS CARD
-// Company name notification on/off icon
-// role
-// round name
-// timing venue 
-// link

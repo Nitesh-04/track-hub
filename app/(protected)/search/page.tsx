@@ -6,7 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { fetchApplicationByUser } from "@/app/actions";
-import { Link,Bell,BellOff } from "lucide-react";
+import { Link as LinkIcon,Bell,BellOff } from "lucide-react";
+import Link from "next/link";
 
 interface Application {
   id: string;
@@ -44,28 +45,30 @@ export default function Search() {
       <div className="container mx-auto px-8 py-8 mt-2">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {applications.map((application) => (
-            <Card key={application.id} className="w-full h-auto transition-transform hover:scale-105 border-[#001F3F]">
+            <Link href={`view/${application.id}`}>
+              <Card key={application.id} className="w-full h-auto transition-transform hover:scale-105 border-[#001F3F]">
               <CardContent className="p-6">
                 <div className="text-xl font-semibold text-[#001F3F] flex justify-between">
                   <p>{application.companyName}</p>
                   <p>{application.notifications ? <Bell className="w-4 h-4"/> : <BellOff className="w-4 h-4"/>}</p>
                 </div>
                 <div className="flex space-x-2 mt-2">
-                  <Badge>{application.role}</Badge>
-                  <Badge>{application.location}</Badge>
+                  <Badge className="bg-[#001F3F] text-slate-100">{application.role}</Badge>
+                  <Badge className="bg-[#001F3F] text-slate-100">{application.location}</Badge>
                 </div>
                 <div className="mt-4">
                   <p>CTC: {application.ctc ? `₹${application.ctc}` : "Not provided"}</p>
                 </div>
                 {application.link && (
-                  <div className="mt-2">
-                    <Link href={application.link} className="text-blue-500">
+                  <div className="mt-2 flex justify-end">
+                    <LinkIcon href={application.link} className="text-[#001F3F]">
                       View Application
-                    </Link>
+                    </LinkIcon>
                   </div>
                 )}
               </CardContent>
             </Card>
+            </Link>
           ))}
         </div>
       </div>

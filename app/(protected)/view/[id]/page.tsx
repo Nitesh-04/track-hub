@@ -1,18 +1,10 @@
-"use client"
-import React, { useState } from 'react';
+"use client";
+import React, { useState, useEffect } from "react";
 import { format } from "date-fns";
 import Header from "@/app/_components/header/Header";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { CalendarIcon, PlusCircle } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import {
   Dialog,
   DialogContent,
@@ -20,165 +12,378 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
-import { Poppins } from 'next/font/google';
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  CalendarIcon,
+  Link as LinkIcon,
+  MapIcon,
+  MapPinIcon,
+  PlusCircle,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Poppins } from "next/font/google";
+import {
+  fetchApplicationById,
+  createRound,
+  RoundData,
+  fetchRoundByApplicationId,
+} from "@/app/actions";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
 
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "700"],
 });
 
-type Round = {
-    id?: string; 
-    name: string;
-    date: Date | null;
-    time: string;
-    venue: string;
-    link: string;
-  };
-  
+interface Application {
+  id: string;
+  companyName: string;
+  stipend: number | null;
+  ctc: number | null;
+  role: string;
+  location: string;
+  link?: string | null;
+  notifications: boolean;
+  userId: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
-export default function ApplicationView() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [date, setDate] = useState<Date | undefined>(undefined);
+interface Round {
+  id: string;
+  roundTitle: string;
+  roundDateTime: Date;
+  venue: string;
+  roundLink: string | null;
+  status: string;
+  applicationId: string;
+  userId: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export default function ApplicationView({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const { id } = params;
+  const applicationId = id;
+  const userId = "1010";
+
+  const [application, setApplication] = useState<Application | null>(null);
   const [rounds, setRounds] = useState<Round[]>([]);
-  const [roundDetails, setRoundDetails] = useState({
-    name: "",
-    time: "",
+  const [date, setDate] = useState<Date>();
+  const [time, setTime] = useState<string>("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [newRound, setNewRound] = useState({
+    roundTitle: "",
     venue: "",
-    link: ""
+    roundLink: "",
   });
 
-  const handleAddRound = () => {
-    if (roundDetails.name && date) {
-      setRounds([...rounds, { ...roundDetails, date }]);
-      setRoundDetails({ name: "", time: "", venue: "", link: "" });
-      setDate(undefined);
-      setIsOpen(false);
-    }
-  };
+  useEffect(() => {
+    async function fetchData() {
+      setIsLoading(true);
+      setError(null);
 
-  const handleRoundDetailChange = (field: string, value: string) => {
-    setRoundDetails((prevDetails) => ({ ...prevDetails, [field]: value }));
-  };
+      try {
+        if (!applicationId) {
+          throw new Error("Application ID is required");
+        }
+
+        const appData = await fetchApplicationById(applicationId);
+        if (!appData) {
+          throw new Error("Application not found");
+        }
+        setApplication(appData);
+
+        const roundsData = await fetchRoundByApplicationId(applicationId);
+        setRounds(roundsData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setError(error instanceof Error ? error.message : "An error occurred");
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchData();
+  }, [applicationId]);
+
+  async function handleAddRound(e:any) {
+    e.preventDefault();
+
+    if (!date || !newRound.roundTitle || !time) {
+      setError("Please fill in all required fields");
+      return;
+    }
+
+    try {
+      const [hours, minutes] = time.split(":").map(Number);
+      const combinedDateTime = new Date(date);
+      combinedDateTime.setHours(hours, minutes);
+
+      const roundData: RoundData = {
+        roundTitle: newRound.roundTitle,
+        roundDateTime: combinedDateTime.getTime(),
+        venue: newRound.venue,
+        roundLink: newRound.roundLink,
+        status: "upcoming",
+      };
+
+      await createRound(roundData, applicationId, userId);
+
+      const updatedRounds = await fetchRoundByApplicationId(applicationId);
+      setRounds(updatedRounds);
+
+      setNewRound({ roundTitle: "", venue: "", roundLink: "" });
+      setDate(undefined);
+      setTime("");
+      setIsOpen(false);
+      setError(null);
+    } catch (error) {
+      console.error("Error adding round:", error);
+      setError(error instanceof Error ? error.message : "Failed to add round");
+    }
+  }
+
+  if (isLoading) {
+    return (
+      <div className="h-full w-full">
+        <div className="mb-14 bg-[#001F3F]">
+          <Header />
+        </div>
+        <div className="container mx-auto px-4 py-8">
+          <div className="flex items-center justify-center h-64">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#001F3F]"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="h-full w-full">
+        <div className="mb-14 bg-[#001F3F]">
+          <Header />
+        </div>
+        <div className="container mx-auto px-4 py-8">
+          <Alert variant="destructive">
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="h-full w-full">
-      <div className="mb-14 bg-[#001F3F]"><Header /></div>
-      <div className="container mx-auto px-4 py-8">
-        <h1 className={`text-2xl text-center font-bold mb-6 text-[#001F3F] ${poppins.className}`}>Application Details</h1>
-        
-        {/* Display Application Details */}
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          {/* Replace with actual application details */}
-          <h2 className={`text-lg font-semibold text-[#001F3F]`}>Application Title</h2>
-          <p className="text-[#001F3F]">Company: XYZ Corp</p>
-          <p className="text-[#001F3F]">Stipend: $1000</p>
-          <p className="text-[#001F3F]">Role: Software Engineer</p>
-          {/* Add more application fields as necessary */}
-        </div>
-
-        {/* Add Round Section */}
-        <div className="flex justify-between items-center mt-6">
-          <Dialog open={isOpen} onOpenChange={setIsOpen}>
-            <DialogTrigger asChild>
-              <Button variant="outline" className="border-[#001F3F] text-[#001F3F]">
-                <PlusCircle className="mr-2 h-4 w-4" /> Add Round
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="rounded-none sm:max-w-[425px] max-h-[82vh] overflow-y-auto mt-6 md:ml-14">
-              <DialogHeader>
-                <DialogTitle className={`text-[#001F3F] ${poppins.className}`}>Add New Round</DialogTitle>
-              </DialogHeader>
-              <div className="grid gap-4 py-4">
-                <div className="space-y-2">
-                  <Label htmlFor="round-name" className={`text-[#001F3F] ${poppins.className}`}>Round Name</Label>
-                  <Input
-                    id="round-name"
-                    placeholder="Enter round name"
-                    className="border-[#001F3F]"
-                    value={roundDetails.name}
-                    onChange={(e) => handleRoundDetailChange('name', e.target.value)}
-                  />
+      <div className="mb-8 bg-[#001F3F]">
+        <Header />
+      </div>
+      <div className="container mx-auto px-8 py-8">
+        <h2
+          className={`text-2xl font-semibold mb-4 text-[#001F3F] ${poppins.className}`}
+        >
+          Application
+        </h2>
+        {application && (
+          <div className="bg-white p-4 rounded-lg shadow-md mb-6 lg:w-1/2 border-[#001F3F]">
+            <p className={`flex justify-between  ${poppins.className}`}>
+              <h2 className="text-2xl font-semibold mb-2 text-[#001F3F] ">
+                {" "}
+                {application.companyName}
+              </h2>
+              {application.link && (
+                <div className="col-span-2">
+                  <Link
+                    href={application.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#001F3F] flex items-center"
+                  >
+                    <LinkIcon className="mr-1 h-4 w-4" />
+                    Visit
+                  </Link>
                 </div>
-                <div className="space-y-2">
-                  <Label className={`text-[#001F3F] ${poppins.className}`}>Date</Label>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant={"outline"}
-                        className={cn(
-                          "w-full justify-start text-left font-normal border-[#001F3F]",
-                          !date && "text-muted-foreground"
-                        )}
-                      >
-                        {date ? format(date, "PPP") : <span>Pick a date</span>}
-                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={date}
-                        onSelect={(day) => setDate(day)} 
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="time" className={`text-[#001F3F] ${poppins.className}`}>Time</Label>
-                  <Input
-                    id="time"
-                    type="time"
-                    className="border-[#001F3F]"
-                    value={roundDetails.time}
-                    onChange={(e) => handleRoundDetailChange('time', e.target.value)}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="venue" className={`text-[#001F3F] ${poppins.className}`}>Venue</Label>
-                  <Input
-                    id="venue"
-                    placeholder="Enter venue"
-                    className="border-[#001F3F]"
-                    value={roundDetails.venue}
-                    onChange={(e) => handleRoundDetailChange('venue', e.target.value)}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="round-link" className={`text-[#001F3F] ${poppins.className}`}>Link</Label>
-                  <Input
-                    id="round-link"
-                    placeholder="Enter round link"
-                    className="border-[#001F3F]"
-                    value={roundDetails.link}
-                    onChange={(e) => handleRoundDetailChange('link', e.target.value)}
-                  />
-                </div>
+              )}
+            </p>
+            <Badge className="bg-[#001F3F] text-white mb-2">
+              <MapPinIcon className="w-3 h-3 mr-2"/><p>{application.location}</p>
+            </Badge>
+            <div className="flex justify-between gap-10 mt-5">
+              <div>
+                <p className="font-medium">Role</p>
+                <p className="text-gray-600">{application.role}</p>
               </div>
-              <Button onClick={handleAddRound} className="bg-[#001F3F] hover:bg-[#003366]">Add Round</Button>
-            </DialogContent>
-          </Dialog>
-        </div>
-
-        {/* Display Rounds */}
-        {rounds.length > 0 && (
-          <div className="mt-6">
-            <h2 className={`text-lg font-semibold text-[#001F3F] ${poppins.className}`}>Rounds</h2>
-            <ul className="space-y-4 mt-4">
-              {rounds.map((round, index) => (
-                <li key={index} className="p-4 border rounded-lg border-[#001F3F]">
-                  <p className="font-bold text-[#001F3F]">Round Name: {round.name}</p>
-                  <p className="text-[#001F3F]">Date: {round.date ? format(round.date, "PPP") : "N/A"}</p>
-                  <p className="text-[#001F3F]">Time: {round.time}</p>
-                  <p className="text-[#001F3F]">Venue: {round.venue}</p>
-                  <p className="text-[#001F3F]">Link: {round.link}</p>
-                </li>
-              ))}
-            </ul>
+              <div>
+                <p className="font-medium">Stipend</p>
+                <p className="text-gray-600">
+                  {application.stipend
+                    ? `$${application.stipend.toLocaleString()}`
+                    : "N/A"}
+                </p>
+              </div>
+              <div>
+                <p className="font-medium">CTC</p>
+                <p className="text-gray-600">
+                  {application.ctc
+                    ? `$${application.ctc.toLocaleString()}`
+                    : "N/A"}
+                </p>
+              </div>
+            </div>
           </div>
         )}
+
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
+          <DialogTrigger asChild>
+            <Button variant="outline" className="mb-6 bg-[#001F3F] text-white hover:bg-[#001F3F] hover:text-white">
+              <PlusCircle className="mr-2 h-4 w-4" /> Add Rounds
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="md:ml-10 mt-5 text-[#001F3F]">
+            <DialogHeader>
+              <DialogTitle>Add New Round</DialogTitle>
+            </DialogHeader>
+            <form onSubmit={handleAddRound}>
+            <div className="grid gap-4 py-4">
+              <div>
+                <Label htmlFor="roundTitle">Round Title</Label>
+                <Input
+                  id="roundTitle"
+                  value={newRound.roundTitle}
+                  onChange={(e) =>
+                    setNewRound({ ...newRound, roundTitle: e.target.value })
+                  }
+                  required
+                />
+              </div>
+              <div>
+                <Label>Date</Label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "w-full justify-start text-left",
+                        !date && "text-muted-foreground"
+                      )}
+                    >
+                      {date ? format(date, "PPP") : <span>Select Date</span>}
+                      <CalendarIcon className="ml-auto h-4 w-4" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={date}
+                      onSelect={setDate}
+                      initialFocus
+                      disabled={(date) =>
+                        date < new Date(new Date().setHours(0, 0, 0, 0))
+                      }
+                      required
+                    />
+                  </PopoverContent>
+                </Popover>
+              </div>
+              <div>
+                <Label htmlFor="time">Time</Label>
+                <Input
+                  id="time"
+                  type="time"
+                  value={time}
+                  onChange={(e) => setTime(e.target.value)}
+                  required
+                />
+              </div>
+              <div>
+                <Label htmlFor="venue">Venue</Label>
+                <Input
+                  id="venue"
+                  value={newRound.venue}
+                  onChange={(e) =>
+                    setNewRound({ ...newRound, venue: e.target.value })
+                  }
+                  required
+                />
+              </div>
+              <div>
+                <Label htmlFor="roundLink">Round Link</Label>
+                <Input
+                  id="roundLink"
+                  value={newRound.roundLink}
+                  onChange={(e) =>
+                    setNewRound({ ...newRound, roundLink: e.target.value })
+                  }
+                  required
+                />
+              </div>
+              <Button
+              type="submit"
+              className="w-full bg-[#001F3F] hover:bg-slate-700"
+            >
+              Add Round
+            </Button>
+            </div>
+            </form>
+          </DialogContent>
+        </Dialog>
+
+        <h2
+          className={`text-2xl font-semibold mb-4 text-[#001F3F] ${poppins.className}`}
+        >
+          Rounds
+        </h2>
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
+          {rounds.map((round) => (
+            <Card
+              key={round.id}
+              className="w-full h-auto border-[#001F3F] shadow-md"
+            >
+              <CardContent className="p-6">
+                <p className="text-xl font-semibold text-[#001F3F] flex justify-between">
+                  <p>{round.roundTitle}</p>
+                  {round.roundLink && (
+                    <div className="mt-2">
+                      <Link
+                        href={round.roundLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[#001F3F] hover:underline"
+                      >
+                        <LinkIcon className="mr-1 h-4 w-4" />
+                      </Link>
+                    </div>
+                  )}
+                </p>
+
+                <div className="mt-2">
+                  <Badge className="bg-[#001F3F] text-white">
+                  <MapPinIcon className="w-3 h-3 mr-2"/><p>{round.venue}</p>
+                  </Badge>
+                </div>
+
+                <p className="text-gray-600 text-sm mt-2">
+                  {format(new Date(round.roundDateTime), "PPpp")}
+                </p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
     </div>
   );
