@@ -88,7 +88,11 @@ export default function ApplicationView({
         setApplication(appData);
 
         const roundsData = await fetchRoundByApplicationId(applicationId);
-        setRounds(roundsData);
+        const typedRoundsData = roundsData.map((round) => ({
+          ...round,
+          status: round.status as "upcoming" | "completed",
+        }));
+        setRounds(typedRoundsData);
       } catch (error) {
         console.error("Error fetching data:", error);
         setError(error instanceof Error ? error.message : "An error occurred");
@@ -124,7 +128,11 @@ export default function ApplicationView({
       await createRound(roundData, applicationId, userId);
 
       const updatedRounds = await fetchRoundByApplicationId(applicationId);
-      setRounds(updatedRounds);
+      const typedUpdatedRounds = updatedRounds.map((round) => ({
+        ...round,
+        status: round.status as "upcoming" | "completed",
+      }));
+      setRounds(typedUpdatedRounds);
 
       setNewRound({ roundTitle: "", venue: "", roundLink: "" });
       setDate(undefined);

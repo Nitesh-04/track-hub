@@ -90,10 +90,21 @@ export async function fetchApplicationByUser(userId: string) {
 
 export async function fetchRoundByApplicationId(applicationId: string) {
     try {
-        return await prisma.round.findMany({
+        const rounds = await prisma.round.findMany({
             where: { applicationId },
             orderBy: { roundDateTime: "desc" }
         });
+
+        const currentTime = new Date();
+        const withStatusRounds = rounds.map((round) => {
+            if (round.roundDateTime < currentTime) {
+                return { ...round, status: "completed" };
+            }
+            return round;
+        });
+
+        return withStatusRounds;
+        
     } catch (error) {
         console.error("Error fetching rounds:", error);
         throw new Error("Failed to fetch rounds");
