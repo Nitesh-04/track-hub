@@ -64,7 +64,6 @@ export default function ApplicationView({
   const [time, setTime] = useState<string>("");
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [newRound, setNewRound] = useState({
     roundTitle: "",
     venue: "",
@@ -74,7 +73,6 @@ export default function ApplicationView({
   useEffect(() => {
     async function fetchData() {
       setIsLoading(true);
-      setError(null);
 
       try {
         if (!applicationId) {
@@ -95,7 +93,6 @@ export default function ApplicationView({
         setRounds(typedRoundsData);
       } catch (error) {
         console.error("Error fetching data:", error);
-        setError(error instanceof Error ? error.message : "An error occurred");
       } finally {
         setIsLoading(false);
       }
@@ -108,7 +105,6 @@ export default function ApplicationView({
     e.preventDefault();
 
     if (!date || !newRound.roundTitle || !time) {
-      setError("Please fill in all required fields");
       return;
     }
 
@@ -138,10 +134,8 @@ export default function ApplicationView({
       setDate(undefined);
       setTime("");
       setIsOpen(false);
-      setError(null);
     } catch (error) {
       console.error("Error adding round:", error);
-      setError(error instanceof Error ? error.message : "Failed to add round");
     }
   }
 
@@ -160,27 +154,12 @@ export default function ApplicationView({
     );
   }
 
-  if (error) {
-    return (
-      <div className="h-full w-full">
-        <div className="mb-14 bg-[#001F3F]">
-          <Header />
-        </div>
-        <div className="container mx-auto px-4 py-8">
-          <Alert variant="destructive">
-            <AlertDescription>{error}</AlertDescription>
-          </Alert>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="h-full w-full">
       <div className="mb-8 bg-[#001F3F]">
         <Header />
       </div>
-      <div className="container mx-auto px-8 py-8">
+      <div className="container mx-auto px-4 md:px-8 py-8">
         <h2
           className={`text-2xl font-semibold mb-4 text-[#001F3F] ${poppins.className}`}
         >
@@ -220,7 +199,7 @@ export default function ApplicationView({
                 <p className="font-medium">Stipend</p>
                 <p className="text-gray-600">
                   {application.stipend
-                    ? `$${application.stipend.toLocaleString()}`
+                    ? `Rs.${application.stipend.toLocaleString()}`
                     : "N/A"}
                 </p>
               </div>
@@ -228,7 +207,7 @@ export default function ApplicationView({
                 <p className="font-medium">CTC</p>
                 <p className="text-gray-600">
                   {application.ctc
-                    ? `$${application.ctc.toLocaleString()}`
+                    ? `Rs.${application.ctc.toLocaleString()}`
                     : "N/A"}
                 </p>
               </div>
