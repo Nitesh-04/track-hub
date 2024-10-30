@@ -42,7 +42,7 @@ interface Round {
   roundDateTime: Date;
   venue: string;
   roundLink: string | null;
-  status: string;
+  status: "upcoming" | "completed";
   applicationId: string;
   userId: string;
   createdAt: Date;
@@ -118,7 +118,7 @@ export default function ApplicationView({
         roundDateTime: combinedDateTime.getTime(),
         venue: newRound.venue,
         roundLink: newRound.roundLink,
-        status: "upcoming",
+        status: combinedDateTime < new Date() ? "completed" : "upcoming",
       };
 
       await createRound(roundData, applicationId, userId);

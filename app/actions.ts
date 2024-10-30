@@ -18,7 +18,7 @@ export type RoundData = {
     roundDateTime: number;
     venue: string;
     roundLink: string;
-    status: "upcoming";
+    status: "upcoming" | "completed";
 }
 
 export async function createApplication(formData: ApplicationData, userId: string) {
