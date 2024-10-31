@@ -6,9 +6,9 @@ import { Badge } from "@/components/ui/badge";
 import { MapPinIcon, LinkIcon } from "lucide-react";
 import { Poppins } from "next/font/google";
 import Link from "next/link";
-import { AddRoundDialog } from "@/app/_components/view/AddRound";
-import { RoundsList } from "@/app/_components/view/RoundsList";
-import EditApplication from "@/app/_components/view/EditApplication";
+import { AddRoundDialog } from "@/app/(protected)/view/_components/AddRound";
+import { RoundsList } from "@/app/(protected)/view/_components/RoundsList";
+import EditApplication from "@/app/(protected)/view/_components/EditApplication";
 import { fetchApplicationById, createRound, fetchRoundByApplicationId } from "@/app/actions";
 import { RoundData } from "@/app/actions";
 

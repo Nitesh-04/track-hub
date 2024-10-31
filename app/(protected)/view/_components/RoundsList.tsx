@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CircleDot, LinkIcon, MapPinIcon } from "lucide-react";
 import Link from "next/link";
-import EditRound from "@/app/_components/view/EditRound";
+import EditRound from "@/app/(protected)/view/_components/EditRound";
 
 interface RoundsListProps {
   rounds: Round[];
