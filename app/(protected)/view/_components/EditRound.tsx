@@ -59,7 +59,7 @@ const EditRound: React.FC<EditRoundProps> = ({ round, onUpdate }) => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Edit className="mt-2" size={16} />
+        <Edit size={16} />
       </DialogTrigger>
       <DialogContent className="md:ml-10 mt-5 text-[#001F3F]">
         <DialogHeader>

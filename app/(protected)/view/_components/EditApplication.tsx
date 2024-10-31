@@ -53,7 +53,7 @@ const EditApplication: React.FC<EditApplicationProps> = ({ application, onUpdate
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Edit className="mt-1 ml-4" size={16} />
+        <Edit className="ml-4" size={16} />
       </DialogTrigger>
       <DialogContent className="md:ml-10 mt-5 text-[#001F3F]">
         <DialogHeader>
