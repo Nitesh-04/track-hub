@@ -8,6 +8,8 @@ import { Badge } from "@/components/ui/badge";
 import { fetchApplicationByUser } from "@/app/actions";
 import { Link as LinkIcon,Bell,BellOff, MapPinIcon } from "lucide-react";
 import Link from "next/link";
+import { useUser } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
 interface Application {
   id: string;
@@ -24,6 +26,15 @@ interface Application {
 }
 
 export default function Search() {
+
+  const { user } = useUser();
+  if(!user)
+  {
+    redirect("/sign-in");
+  }
+
+  const userId = user.id;
+
   const [applications, setApplications] = useState<Application[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -31,7 +42,7 @@ export default function Search() {
     async function fetchData() {
       setIsLoading(true);
       try {
-        const data = await fetchApplicationByUser("1010");
+        const data = await fetchApplicationByUser(userId);
         if (!data) {
           throw new Error("Applications not found");
         }

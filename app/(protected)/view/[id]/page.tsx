@@ -11,6 +11,8 @@ import { RoundsList } from "@/app/(protected)/view/_components/RoundsList";
 import EditApplication from "@/app/(protected)/view/_components/EditApplication";
 import { fetchApplicationById, createRound, fetchRoundByApplicationId } from "@/app/actions";
 import { RoundData } from "@/app/actions";
+import { useUser } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -49,8 +51,15 @@ export default function ApplicationView({
 }: {
   params: { id: string };
 }) {
+
+  const { user } = useUser();
+  if(!user)
+  {
+    redirect("/sign-in");
+  }
+
   const { id: applicationId } = params;
-  const userId = "1010"; // Replace with actual user ID from your auth system
+  const userId = user.id;
 
   const [application, setApplication] = useState<Application | null>(null);
   const [rounds, setRounds] = useState<Round[]>([]);

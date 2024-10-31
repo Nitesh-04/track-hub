@@ -8,6 +8,8 @@ import { Switch } from "@/components/ui/switch";
 import { Poppins } from 'next/font/google';
 import { createApplication } from "@/app/actions";
 import Link from "next/link";
+import { useUser } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -16,6 +18,8 @@ const poppins = Poppins({
 
 
 export default function Create() {
+
+  const {user} = useUser();
 
   const [companyName, setCompanyName] = useState("");
   const [stipend, setStipend] = useState("");
@@ -39,8 +43,12 @@ export default function Create() {
       link: links,
       notifications: notificationsEnabled,
     };
-
-    const userId="1010";
+    
+    if(!user) 
+    {
+        redirect("/sign-in");
+    }
+    const userId= user.id;
     
     try
     {
