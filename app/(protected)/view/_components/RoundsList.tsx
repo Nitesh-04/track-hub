@@ -3,7 +3,6 @@ import { format } from "date-fns";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CircleDot, LinkIcon, MapPinIcon } from "lucide-react";
-import Link from "next/link";
 import EditRound from "@/app/(protected)/view/_components/EditRound";
 
 interface RoundsListProps {
@@ -37,14 +36,14 @@ export const RoundsList: React.FC<RoundsListProps> = ({ rounds, onUpdate }) => {
               <span>{round.roundTitle}</span>
               <div className="flex items-center">
                 {round.roundLink && (
-                  <Link
+                  <a
                     href={round.roundLink}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-[#001F3F] hover:underline mr-4"
                   >
                     <LinkIcon className="h-4 w-4" />
-                  </Link>
+                  </a>
                 )}
                 <EditRound round={round} onUpdate={onUpdate} />
               </div>

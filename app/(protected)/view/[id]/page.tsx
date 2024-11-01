@@ -5,7 +5,6 @@ import Header from "@/app/_components/header/Header";
 import { Badge } from "@/components/ui/badge";
 import { MapPinIcon, LinkIcon } from "lucide-react";
 import { Poppins } from "next/font/google";
-import Link from "next/link";
 import { AddRoundDialog } from "@/app/(protected)/view/_components/AddRound";
 import { RoundsList } from "@/app/(protected)/view/_components/RoundsList";
 import EditApplication from "@/app/(protected)/view/_components/EditApplication";
@@ -157,14 +156,14 @@ export default function ApplicationView({
               </h2>
               <div className="flex items-center">
                 {application.link && (
-                  <Link
+                  <a
                     href={application.link}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-[#001F3F] flex items-center mr-4"
                   >
                     <LinkIcon className="h-4 w-4" />
-                  </Link>
+                  </a>
                 )}
                 <EditApplication 
                   application={application} 

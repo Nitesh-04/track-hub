@@ -140,7 +140,6 @@ export const AddRoundDialog: React.FC<AddRoundDialogProps> = ({
                 onChange={(e) =>
                   setNewRound({ ...newRound, roundLink: e.target.value })
                 }
-                required
               />
             </div>
             <Button
