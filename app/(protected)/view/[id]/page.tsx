@@ -54,6 +54,7 @@ export default function ApplicationView({
 
   const router = useRouter();
   const { user } = useUser();
+  
   if(!user || !user.id)
   {
     router.push("/sign-in");
