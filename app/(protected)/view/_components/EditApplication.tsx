@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { updateApplication, ApplicationData } from "@/app/actions";
 import { Edit } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { TheToaster } from "@/components/ui/use-toast";
 
 interface EditApplicationProps {
   application: {
@@ -23,6 +24,7 @@ interface EditApplicationProps {
 
 const EditApplication: React.FC<EditApplicationProps> = ({ application, onUpdate }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { toast } = TheToaster();
   const [editedApplication, setEditedApplication] = useState<ApplicationData>({
     companyName: application.companyName,
     stipend: application.stipend ?? 0,
@@ -36,6 +38,9 @@ const EditApplication: React.FC<EditApplicationProps> = ({ application, onUpdate
   async function handleUpdateApplication(e: React.FormEvent) {
     e.preventDefault();
     await updateApplication(application.id, editedApplication);
+    toast({
+      title: "Application edited successfully!",
+    });
     setIsOpen(false);
     onUpdate();
   }

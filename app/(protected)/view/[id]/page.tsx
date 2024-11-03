@@ -11,7 +11,8 @@ import EditApplication from "@/app/(protected)/view/_components/EditApplication"
 import { fetchApplicationById, createRound, fetchRoundByApplicationId } from "@/app/actions";
 import { RoundData } from "@/app/actions";
 import { useUser } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
+import { TheToaster } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -51,12 +52,15 @@ export default function ApplicationView({
   params: { id: string };
 }) {
 
+  const router = useRouter();
   const { user } = useUser();
-  if(!user)
+  if(!user || !user.id)
   {
-    redirect("/sign-in");
+    router.push("/sign-in");
+    return;
   }
 
+  const { toast } = TheToaster();
   const { id: applicationId } = params;
   const userId = user.id;
 
@@ -115,8 +119,16 @@ export default function ApplicationView({
   const handleAddRound = async (roundData: RoundData) => {
     try {
       await createRound(roundData, applicationId, userId);
+      toast({
+        title: "Round created successfully!",
+      });
       await fetchRoundData();
     } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to add round. Please try again.",
+      });
       console.error("Error adding round:", error);
     }
   };

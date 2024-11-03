@@ -9,7 +9,7 @@ import { fetchApplicationByUser } from "@/app/actions";
 import { Link as LinkIcon,Bell,BellOff, MapPinIcon } from "lucide-react";
 import Link from "next/link";
 import { useUser } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 interface Application {
   id: string;
@@ -27,10 +27,12 @@ interface Application {
 
 export default function Search() {
 
+  const router = useRouter();
   const { user } = useUser();
   if(!user)
   {
-    redirect("/sign-in");
+    router.push("/sign-in");
+    return;
   }
 
   const userId = user.id;

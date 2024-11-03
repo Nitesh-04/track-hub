@@ -7,9 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Poppins } from 'next/font/google';
 import { createApplication } from "@/app/actions";
-import Link from "next/link";
 import { useUser } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { TheToaster } from "@/components/ui/use-toast";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -20,6 +20,8 @@ const poppins = Poppins({
 export default function Create() {
 
   const {user} = useUser();
+  const { toast } = TheToaster();
+  const router = useRouter();
 
   const [companyName, setCompanyName] = useState("");
   const [stipend, setStipend] = useState("");
@@ -28,9 +30,6 @@ export default function Create() {
   const [locations, setLocations] = useState("");
   const [links, setLinks] = useState("");
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
-  const [enableView,setenableView] = useState(true);
-
-  const [viewapplicationId, setviewApplicationId] = useState("");
 
   async function handleSubmit(e:any) {
     e.preventDefault();
@@ -46,19 +45,31 @@ export default function Create() {
     
     if(!user) 
     {
-        redirect("/sign-in");
+        router.push("/sign-in");
+        return;
     }
-    const userId= user.id;
+    
+    const userId = user.id;
     
     try
     {
       const applicationId = await createApplication(formData, userId);
-      setviewApplicationId(applicationId);
-      setenableView(false);
+      toast({
+        title: "Application created successfully!",
+        description: "Opening application...",
+      });
+      setTimeout(() => {
+        router.push(`view/${applicationId}`);
+      }, 2000);
     }
     catch(err)
     {
         console.log(err);
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: "Failed to create application. Please try again.",
+        });
     }
     
     setCompanyName("");
@@ -156,12 +167,6 @@ export default function Create() {
               <Label htmlFor="notifications" className={`text-[#001F3F] ${poppins.className}`}>Enable notifications</Label>
             </div>
             <Button type="submit" className="bg-[#001F3F] hover:bg-[#003366]">Create Application</Button>
-          </div>
-          <div className="flex md:flex-row flex-col gap-10 justify-between items-center md:pb-0 pb-20">
-            <p className={`text-[#001F3F] ${poppins.className} text-xs`}>
-              Note: you can add rounds in application after creating an application.
-            </p>
-            <Link href={`view/${viewapplicationId}`}><Button disabled={enableView} type="button" className="bg-[#001F3F] hover:bg-[#003366]">View Application</Button></Link>
           </div>
         </form>
       </div>

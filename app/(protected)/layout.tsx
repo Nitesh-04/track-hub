@@ -1,5 +1,6 @@
 import Sidebar from "@/app/_components/sidebar/Sidebar";
 import GridPattern from "@/components/ui/animated-grid-pattern";
+import { Toaster } from "@/components/ui/toaster";
 import { ReactNode } from "react";
 
 interface LayoutProps {
@@ -21,6 +22,7 @@ export default function Layout({ children }: LayoutProps) {
                 <main className="flex-1 overflow-auto mt-5 min-h-screen">
                     {children}
                 </main>
+                <Toaster/>
             </div>
         </div>
     );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -29,7 +29,7 @@ export const AddRoundDialog: React.FC<AddRoundDialogProps> = ({
     roundLink: "",
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  async function handleSubmit(e:FormEvent) {
     e.preventDefault();
 
     if (!date || !newRound.roundTitle || !time) {

@@ -3,12 +3,13 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Calendar, CalendarProps } from "@/components/ui/calendar";
+import { Calendar} from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { updateRound, RoundData } from "@/app/actions";
 import { CalendarIcon, Edit } from "lucide-react";
+import { TheToaster } from "@/components/ui/use-toast";
 
 interface EditRoundProps {
   round: {
@@ -24,6 +25,7 @@ interface EditRoundProps {
 
 const EditRound: React.FC<EditRoundProps> = ({ round, onUpdate }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { toast } = TheToaster();
   const [editedRound, setEditedRound] = useState<RoundData>({
     roundTitle: round.roundTitle,
     roundDateTime: round.roundDateTime.getTime(),
@@ -35,6 +37,9 @@ const EditRound: React.FC<EditRoundProps> = ({ round, onUpdate }) => {
   async function handleUpdateRound(e: React.FormEvent) {
     e.preventDefault();
     await updateRound(round.id, editedRound);
+    toast({
+      title: "Round updated successfully!",
+    });
     setIsOpen(false);
     onUpdate();
   }
