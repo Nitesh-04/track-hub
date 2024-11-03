@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import Header from "@/app/_components/header/Header";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -31,7 +31,7 @@ export default function Create() {
   const [links, setLinks] = useState("");
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
 
-  async function handleSubmit(e:any) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     const formData = {
       companyName,
