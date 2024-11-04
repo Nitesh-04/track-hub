@@ -6,6 +6,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import HowItWorksCarousel from "@/app/_components/landing/HowItWorks";
 import Image from "next/image";
+import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -14,6 +16,14 @@ const poppins = Poppins({
 
 
 export default function Home() {
+
+  const router = useRouter();
+  const { user } = useUser();
+
+  if(user && user.id)
+  {
+    router.push("/dashboard");
+  }
 
   return (
     <div className="min-h-screen relative w-full bg-[#e3e3e3]">

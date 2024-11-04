@@ -6,24 +6,11 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { fetchApplicationByUser } from "@/app/actions";
-import { Link as LinkIcon, Bell, BellOff, MapPinIcon } from "lucide-react";
+import { Bell, BellOff, MapPinIcon } from "lucide-react";
 import Link from "next/link";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
-
-interface Application {
-  id: string;
-  companyName: string;
-  stipend: number | null;
-  ctc: number | null;
-  role: string;
-  location: string;
-  link?: string | null;
-  notifications: boolean;
-  userId: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
+import { Application } from "@/lib/types";
 
 export default function Search() {
   const router = useRouter();
@@ -98,13 +85,6 @@ export default function Search() {
                   </div>
                   <div className="mt-2 flex justify-between">
                     <p className="text-sm">CTC: {application.ctc ? `₹${application.ctc}` : "N/A"}</p>
-                    {application.link && (
-                      <div className="flex justify-end">
-                        <LinkIcon href={application.link} className="text-[#001F3F]">
-                          View Application
-                        </LinkIcon>
-                      </div>
-                    )}
                   </div>
                 </CardContent>
               </Card>

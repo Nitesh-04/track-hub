@@ -3,24 +3,12 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { updateApplication, ApplicationData } from "@/app/actions";
+import { updateApplication} from "@/app/actions";
+import { ApplicationData } from "@/lib/types";
 import { Edit } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { TheToaster } from "@/components/ui/use-toast";
-
-interface EditApplicationProps {
-  application: {
-    id: string;
-    companyName: string;
-    stipend: number | null;
-    ctc: number | null;
-    role: string;
-    location: string;
-    link: string | null;
-    notifications: boolean;
-  };
-  onUpdate: () => void;
-}
+import { EditApplicationProps } from "@/lib/types";
 
 const EditApplication: React.FC<EditApplicationProps> = ({ application, onUpdate }) => {
   const [isOpen, setIsOpen] = useState(false);

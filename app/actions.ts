@@ -1,6 +1,7 @@
 "use server"
 
 import prisma from "@/utils/db";
+import { ApplicationData, RoundData } from "@/lib/types";
 
 export async function registerUser(
     clerkid: string,
@@ -49,24 +50,6 @@ export async function registerUser(
       };
     }
   }
-  
-export type ApplicationData = {
-    companyName: string;
-    stipend: number;
-    role: string;
-    ctc: number;
-    location: string;
-    link: string;
-    notifications: boolean;
-}
-
-export type RoundData = {
-    roundTitle: string;
-    roundDateTime: number;
-    venue: string;
-    roundLink: string;
-    status: "upcoming" | "completed";
-}
 
 export async function createApplication(formData: ApplicationData, userId: string) {
     try {

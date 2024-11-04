@@ -9,42 +9,16 @@ import { AddRoundDialog } from "@/app/(protected)/view/_components/AddRound";
 import { RoundsList } from "@/app/(protected)/view/_components/RoundsList";
 import EditApplication from "@/app/(protected)/view/_components/EditApplication";
 import { fetchApplicationById, createRound, fetchRoundByApplicationId } from "@/app/actions";
-import { RoundData } from "@/app/actions";
+import { RoundData } from "@/lib/types";
 import { useUser } from "@clerk/nextjs";
 import { TheToaster } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
+import { Application, Round } from "@/lib/types";
 
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "700"],
 });
-
-interface Application {
-  id: string;
-  companyName: string;
-  stipend: number | null;
-  ctc: number | null;
-  role: string;
-  location: string;
-  link: string | null;
-  notifications: boolean;
-  userId: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-interface Round {
-  id: string;
-  roundTitle: string;
-  roundDateTime: Date;
-  venue: string;
-  roundLink: string | null;
-  status: "upcoming" | "completed";
-  applicationId: string;
-  userId: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
 
 export default function ApplicationView({
   params,

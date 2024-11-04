@@ -4,24 +4,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CircleDot, LinkIcon, MapPinIcon } from "lucide-react";
 import EditRound from "@/app/(protected)/view/_components/EditRound";
+import { Round } from "@/lib/types";
 
 interface RoundsListProps {
   rounds: Round[];
   onUpdate: () => Promise<void>;
 }
-
-interface Round {
-    id: string;
-    roundTitle: string;
-    roundDateTime: Date;
-    venue: string;
-    roundLink: string | null;
-    status: "upcoming" | "completed";
-    applicationId: string;
-    userId: string;
-    createdAt: Date;
-    updatedAt: Date;
-  }
 
 export const RoundsList: React.FC<RoundsListProps> = ({ rounds, onUpdate }) => {
   return (

@@ -7,21 +7,11 @@ import { Calendar} from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
-import { updateRound, RoundData } from "@/app/actions";
+import { updateRound} from "@/app/actions";
+import { RoundData } from "@/lib/types";
 import { CalendarIcon, Edit } from "lucide-react";
 import { TheToaster } from "@/components/ui/use-toast";
-
-interface EditRoundProps {
-  round: {
-    id: string;
-    roundTitle: string;
-    roundDateTime: Date;
-    venue: string;
-    roundLink: string | null;
-    status: "upcoming" | "completed";
-  };
-  onUpdate: () => void;
-}
+import { EditRoundProps } from "@/lib/types";
 
 const EditRound: React.FC<EditRoundProps> = ({ round, onUpdate }) => {
   const [isOpen, setIsOpen] = useState(false);
