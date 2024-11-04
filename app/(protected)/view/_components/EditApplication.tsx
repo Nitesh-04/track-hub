@@ -1,12 +1,8 @@
 import React, { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { updateApplication} from "@/app/actions";
+import { updateApplication } from "@/app/actions";
 import { ApplicationData } from "@/lib/types";
 import { Edit } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
 import { TheToaster } from "@/components/ui/use-toast";
 import { EditApplicationProps } from "@/lib/types";
 
@@ -55,87 +51,80 @@ const EditApplication: React.FC<EditApplicationProps> = ({ application, onUpdate
         <form onSubmit={handleUpdateApplication}>
           <div className="grid gap-4 py-4">
             <div>
-              <Label htmlFor="companyName">Company Name</Label>
-              <Input
+              <label htmlFor="companyName" className="block mb-1">Company Name</label>
+              <input
                 id="companyName"
                 value={editedApplication.companyName}
-                onChange={(e) =>
-                  handleInputChange("companyName", e.target.value)
-                }
+                onChange={(e) => handleInputChange("companyName", e.target.value)}
                 required
+                className="border border-[#001F3F] rounded px-1 w-full"
               />
             </div>
             <div>
-              <Label htmlFor="role">Role</Label>
-              <Input
+              <label htmlFor="role" className="block mb-1">Role</label>
+              <input
                 id="role"
                 value={editedApplication.role}
-                onChange={(e) =>
-                  handleInputChange("role", e.target.value)
-                }
+                onChange={(e) => handleInputChange("role", e.target.value)}
                 required
+                className="border border-[#001F3F] rounded px-1 w-full"
               />
             </div>
             <div>
-              <Label htmlFor="location">Location</Label>
-              <Input
+              <label htmlFor="location" className="block mb-1">Location</label>
+              <input
                 id="location"
                 value={editedApplication.location}
-                onChange={(e) =>
-                  handleInputChange("location", e.target.value)
-                }
+                onChange={(e) => handleInputChange("location", e.target.value)}
                 required
+                className="border border-[#001F3F] rounded px-1 w-full"
               />
             </div>
             <div>
-              <Label htmlFor="stipend">Stipend</Label>
-              <Input
+              <label htmlFor="stipend" className="block mb-1">Stipend</label>
+              <input
                 id="stipend"
                 type="number"
                 value={editedApplication.stipend || ""}
-                onChange={(e) =>
-                  handleInputChange("stipend", parseInt(e.target.value) || 0)
-                }
+                onChange={(e) => handleInputChange("stipend", parseInt(e.target.value) || 0)}
+                className="border border-[#001F3F] rounded px-1 w-full"
               />
             </div>
             <div>
-              <Label htmlFor="ctc">CTC</Label>
-              <Input
+              <label htmlFor="ctc" className="block mb-1">CTC</label>
+              <input
                 id="ctc"
                 type="number"
                 value={editedApplication.ctc || ""}
-                onChange={(e) =>
-                  handleInputChange("ctc", parseInt(e.target.value) || 0)
-                }
+                onChange={(e) => handleInputChange("ctc", parseInt(e.target.value) || 0)}
+                className="border border-[#001F3F] rounded px-1 w-full"
               />
             </div>
             <div>
-              <Label htmlFor="link">Link</Label>
-              <Input
+              <label htmlFor="link" className="block mb-1">Link</label>
+              <input
                 id="link"
                 value={editedApplication.link || ""}
-                onChange={(e) =>
-                  handleInputChange("link", e.target.value)
-                }
+                onChange={(e) => handleInputChange("link", e.target.value)}
+                className="border border-[#001F3F] rounded px-1 w-full"
               />
             </div>
-            <div>
-              <Label htmlFor="notifications" className="text-[16px]">Notifications</Label>
-              <Checkbox
+            <div className="flex items-center">
+              <input
                 id="notifications"
+                type="checkbox"
                 checked={editedApplication.notifications}
-                onCheckedChange={(checked) =>
-                handleInputChange("notifications", checked)
-                }
-                className="ml-8"
-               />
+                onChange={(e) => handleInputChange("notifications", e.target.checked)}
+                className="mr-2"
+              />
+              <label htmlFor="notifications" className="text-[16px]">Notifications</label>
             </div>
-            <Button
+            <button
               type="submit"
-              className="w-full bg-[#001F3F] hover:bg-slate-700"
+              className="w-1/2 mx-auto bg-[#001F3F] hover:bg-slate-700 text-white rounded p-2"
             >
               Update Application
-            </Button>
+            </button>
           </div>
         </form>
       </DialogContent>
