@@ -1,5 +1,6 @@
 import React from "react";
 import { format } from "date-fns";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CircleDot, LinkIcon, MapPinIcon } from "lucide-react";
 import EditRound from "@/app/(protected)/view/_components/EditRound";
@@ -14,8 +15,11 @@ export const RoundsList: React.FC<RoundsListProps> = ({ rounds, onUpdate }) => {
   return (
     <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
       {rounds.map((round) => (
-        <div key={round.id} className="w-full bg-slate-100 h-auto border border-[#001F3F] shadow-md rounded-lg overflow-hidden">
-          <div className="px-6 py-4">
+        <Card
+          key={round.id}
+          className="w-full h-auto border-[#001F3F] shadow-md"
+        >
+          <CardContent className="px-6 py-4">
             <div className="text-xl font-semibold text-[#001F3F] flex justify-between">
               <span>{round.roundTitle}</span>
               <div className="flex items-center">
@@ -51,8 +55,8 @@ export const RoundsList: React.FC<RoundsListProps> = ({ rounds, onUpdate }) => {
               <CircleDot className="w-3 h-3 mr-2" />
               {round.status === "upcoming" ? "Upcoming" : "Completed"}
             </p>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       ))}
     </div>
   );

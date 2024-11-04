@@ -1,6 +1,10 @@
-"use client";
+"use client"
 import React, { FormEvent, useState } from "react";
 import Header from "@/app/_components/header/Header";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
 import { Poppins } from 'next/font/google';
 import { createApplication } from "@/app/actions";
 import { useUser } from "@clerk/nextjs";
@@ -12,8 +16,10 @@ const poppins = Poppins({
   weight: ["400", "700"],
 });
 
+
 export default function Create() {
-  const { user } = useUser();
+
+  const {user} = useUser();
   const { toast } = TheToaster();
   const router = useRouter();
 
@@ -29,22 +35,24 @@ export default function Create() {
     e.preventDefault();
     const formData = {
       companyName,
-      stipend: parseInt(stipend),
+      stipend : parseInt(stipend),
       role,
-      ctc: parseInt(ctc),
+      ctc : parseInt(ctc),
       location: locations,
       link: links,
       notifications: notificationsEnabled,
     };
-
-    if (!user) {
-      router.push("/sign-in");
-      return;
+    
+    if(!user) 
+    {
+        router.push("/sign-in");
+        return;
     }
-
+    
     const userId = user.id;
-
-    try {
+    
+    try
+    {
       const applicationId = await createApplication(formData, userId);
       toast({
         title: "Application created successfully!",
@@ -53,16 +61,17 @@ export default function Create() {
       setTimeout(() => {
         router.push(`view/${applicationId}`);
       }, 2000);
-    } catch (err) {
-      console.log(err);
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "Failed to create application. Please try again.",
-      });
     }
-
-    // Reset form fields
+    catch(err)
+    {
+        console.log(err);
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: "Failed to create application. Please try again.",
+        });
+    }
+    
     setCompanyName("");
     setStipend("");
     setRole("");
@@ -70,83 +79,79 @@ export default function Create() {
     setLocations("");
     setLinks("");
     setNotificationsEnabled(false);
-  }
+  };
 
   return (
     <div className="h-full w-full">
-      <div className="mb-14 bg-[#001F3F]">
-        <Header />
-      </div>
+      <div className="mb-14 bg-[#001F3F]"><Header/></div>
       <div className="container mx-auto px-4 md:py-12 py-10">
-        <h1 className={`text-2xl text-center font-bold mb-6 text-[#001F3F] ${poppins.className}`}>
-          Create a New Application
-        </h1>
+        <h1 className={`text-2xl text-center font-bold mb-6 text-[#001F3F] ${poppins.className}`}>Create a New Application</h1>
         <form className="space-y-6 px-10 md:px-20" onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label htmlFor="company" className={`text-[#001F3F] ${poppins.className}`}>Company Name *</label>
-              <input
+              <Label htmlFor="company" className={`text-[#001F3F] ${poppins.className}`}>Company Name *</Label>
+              <Input
                 required
                 id="company"
                 type="text"
                 placeholder="Enter company name"
-                className="border border-[#001F3F] rounded-md p-2 w-full"
+                className="border-[#001F3F]"
                 value={companyName}
                 onChange={(e) => setCompanyName(e.target.value)}
               />
             </div>
             <div className="space-y-2">
-              <label htmlFor="stipend" className={`text-[#001F3F] ${poppins.className}`}>Stipend *</label>
-              <input
+              <Label htmlFor="stipend" className={`text-[#001F3F] ${poppins.className}`}>Stipend *</Label>
+              <Input
                 required
                 id="stipend"
                 type="number"
                 placeholder="Enter stipend amount"
-                className="border border-[#001F3F] rounded-md p-2 w-full"
+                className="border-[#001F3F]"
                 value={stipend}
                 onChange={(e) => setStipend(e.target.value)}
               />
             </div>
             <div className="space-y-2">
-              <label htmlFor="role" className={`text-[#001F3F] ${poppins.className}`}>Role *</label>
-              <input
+              <Label htmlFor="role" className={`text-[#001F3F] ${poppins.className}`}>Role *</Label>
+              <Input
                 required
                 id="role"
                 placeholder="Enter job role"
-                className="border border-[#001F3F] rounded-md p-2 w-full"
+                className="border-[#001F3F]"
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
               />
             </div>
             <div className="space-y-2">
-              <label htmlFor="ctc" className={`text-[#001F3F] ${poppins.className}`}>CTC</label>
-              <input
+              <Label htmlFor="ctc" className={`text-[#001F3F] ${poppins.className}`}>CTC</Label>
+              <Input
                 id="ctc"
                 type="number"
                 placeholder="Enter CTC"
-                className="border border-[#001F3F] rounded-md p-2 w-full"
+                className="border-[#001F3F]"
                 value={ctc}
                 onChange={(e) => setCtc(e.target.value)}
               />
             </div>
             <div className="space-y-2">
-              <label htmlFor="locations" className={`text-[#001F3F] ${poppins.className}`}>Job Location *</label>
-              <input
+              <Label htmlFor="locations" className={`text-[#001F3F] ${poppins.className}`}>Job Location *</Label>
+              <Input
                 required
                 id="locations"
                 placeholder="Enter job location"
-                className="border border-[#001F3F] rounded-md p-2 w-full"
+                className="border-[#001F3F]"
                 value={locations}
                 onChange={(e) => setLocations(e.target.value)}
               />
             </div>
             <div className="space-y-2">
-              <label htmlFor="links" className={`text-[#001F3F] ${poppins.className}`}>Company Link *</label>
-              <input
+              <Label htmlFor="links" className={`text-[#001F3F] ${poppins.className}`}>Job Link *</Label>
+              <Input
                 required
                 id="links"
                 placeholder="Enter relevant link"
-                className="border border-[#001F3F] rounded-md p-2 w-full"
+                className="border-[#001F3F]"
                 value={links}
                 onChange={(e) => setLinks(e.target.value)}
               />
@@ -154,22 +159,14 @@ export default function Create() {
           </div>
           <div className="flex md:flex-row flex-col gap-10 justify-between items-center">
             <div className="flex items-center space-x-2">
-              <button
-                type="button"
-                onClick={() => setNotificationsEnabled(!notificationsEnabled)}
-                className={`relative inline-flex items-center h-6 rounded-full w-11 transition-colors duration-200 ${notificationsEnabled ? 'bg-[#001F3F]' : 'bg-gray-200'}`}
-              >
-                <span
-                  className={`transform transition-transform duration-200 ease-in-out h-5 w-5 bg-white rounded-full shadow-md ${
-                    notificationsEnabled ? 'translate-x-5' : 'translate-x-0'
-                  }`}
-                />
-              </button>
-              <label htmlFor="notifications" className={`text-[#001F3F] ${poppins.className}`}>Enable notifications</label>
+              <Switch
+                id="notifications"
+                checked={notificationsEnabled}
+                onCheckedChange={setNotificationsEnabled}
+              />
+              <Label htmlFor="notifications" className={`text-[#001F3F] ${poppins.className}`}>Enable notifications</Label>
             </div>
-            <button type="submit" className="bg-[#001F3F] text-white font-semibold py-2 px-4 md:mb-0 mb-20 rounded-md hover:bg-[#003366] transition-colors duration-200">
-              Create Application
-            </button>
+            <Button type="submit" className="bg-[#001F3F] hover:bg-[#003366]">Create Application</Button>
           </div>
         </form>
       </div>

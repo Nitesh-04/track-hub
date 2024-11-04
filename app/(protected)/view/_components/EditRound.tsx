@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Calendar } from "@/components/ui/calendar";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Calendar} from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
-import { updateRound } from "@/app/actions";
+import { updateRound} from "@/app/actions";
 import { RoundData } from "@/lib/types";
 import { CalendarIcon, Edit } from "lucide-react";
 import { TheToaster } from "@/components/ui/use-toast";
@@ -60,31 +63,35 @@ const EditRound: React.FC<EditRoundProps> = ({ round, onUpdate }) => {
         <form onSubmit={handleUpdateRound}>
           <div className="grid gap-4 py-4">
             <div>
-              <label htmlFor="roundTitle" className="block mb-1">Round Title</label>
-              <input
+              <Label htmlFor="roundTitle">Round Title</Label>
+              <Input
                 id="roundTitle"
                 value={editedRound.roundTitle}
-                onChange={(e) => handleInputChange("roundTitle", e.target.value)}
+                onChange={(e) =>
+                  handleInputChange("roundTitle", e.target.value)
+                }
                 required
-                className="border border-[#001F3F] rounded p-2 w-full"
               />
             </div>
             <div>
-              <label className="block mb-1">Date</label>
+              <Label>Date</Label>
               <Popover>
                 <PopoverTrigger asChild>
-                  <button
-                    type="button"
+                  <Button
+                    variant="outline"
                     className={cn(
-                      "w-full justify-start text-left border border-[#001F3F] rounded p-2",
+                      "w-full justify-start text-left",
                       !editedRound.roundDateTime && "text-muted-foreground"
                     )}
                   >
                     {editedRound.roundDateTime
-                      ? format(new Date(editedRound.roundDateTime), "PPP")
+                      ? format(
+                          new Date(editedRound.roundDateTime),
+                          "PPP"
+                        )
                       : <span>Select Date</span>}
                     <CalendarIcon className="ml-auto h-4 w-4" />
-                  </button>
+                  </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
@@ -101,30 +108,32 @@ const EditRound: React.FC<EditRoundProps> = ({ round, onUpdate }) => {
               </Popover>
             </div>
             <div>
-              <label htmlFor="venue" className="block mb-1">Venue</label>
-              <input
+              <Label htmlFor="venue">Venue</Label>
+              <Input
                 id="venue"
                 value={editedRound.venue}
-                onChange={(e) => handleInputChange("venue", e.target.value)}
+                onChange={(e) =>
+                  handleInputChange("venue", e.target.value)
+                }
                 required
-                className="border border-[#001F3F] rounded p-2 w-full"
               />
             </div>
             <div>
-              <label htmlFor="roundLink" className="block mb-1">Round Link</label>
-              <input
+              <Label htmlFor="roundLink">Round Link</Label>
+              <Input
                 id="roundLink"
                 value={editedRound.roundLink}
-                onChange={(e) => handleInputChange("roundLink", e.target.value)}
-                className="border border-[#001F3F] rounded p-2 w-full"
+                onChange={(e) =>
+                  handleInputChange("roundLink", e.target.value)
+                }
               />
             </div>
-            <button
+            <Button
               type="submit"
-              className="w-full bg-[#001F3F] hover:bg-slate-700 text-white rounded p-2"
+              className="w-full bg-[#001F3F] hover:bg-slate-700"
             >
               Update Round
-            </button>
+            </Button>
           </div>
         </form>
       </DialogContent>
