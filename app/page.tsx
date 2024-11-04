@@ -1,3 +1,5 @@
+"use client"
+
 import GridPattern from "@/components/ui/animated-grid-pattern";
 import { Poppins } from "next/font/google";
 import Features from "@/app/_components/landing/Features";
