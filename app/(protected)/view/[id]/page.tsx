@@ -29,7 +29,7 @@ export default function ApplicationView({
   const router = useRouter();
   const { user } = useUser();
   
-  if(!user || !user.id)
+  if(!user)
   {
     router.push("/sign-in");
     return;

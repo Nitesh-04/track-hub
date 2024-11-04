@@ -1,14 +1,12 @@
 import React, { FormEvent, useState } from "react";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { CalendarIcon, PlusCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { RoundData } from "@/app/actions";
+import { RoundData } from "@/lib/types";
 
 interface AddRoundDialogProps {
   isOpen: boolean;
@@ -29,7 +27,7 @@ export const AddRoundDialog: React.FC<AddRoundDialogProps> = ({
     roundLink: "",
   });
 
-  async function handleSubmit(e:FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
 
     if (!date || !newRound.roundTitle || !time) {
@@ -53,7 +51,7 @@ export const AddRoundDialog: React.FC<AddRoundDialogProps> = ({
     setDate(undefined);
     setTime("");
     setIsOpen(false);
-  };
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -72,30 +70,31 @@ export const AddRoundDialog: React.FC<AddRoundDialogProps> = ({
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">
             <div>
-              <Label htmlFor="roundTitle">Round Title</Label>
-              <Input
+              <label htmlFor="roundTitle" className="block mb-1">Round Title</label>
+              <input
                 id="roundTitle"
                 value={newRound.roundTitle}
                 onChange={(e) =>
                   setNewRound({ ...newRound, roundTitle: e.target.value })
                 }
                 required
+                className="border border-[#001F3F] rounded p-2 w-full"
               />
             </div>
             <div>
-              <Label>Date</Label>
+              <label className="block mb-1">Date</label>
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
+                  <button
+                    type="button"
                     className={cn(
-                      "w-full justify-start text-left",
+                      "w-full justify-start text-left border border-[#001F3F] rounded p-2",
                       !date && "text-muted-foreground"
                     )}
                   >
                     {date ? format(date, "PPP") : <span>Select Date</span>}
                     <CalendarIcon className="ml-auto h-4 w-4" />
-                  </Button>
+                  </button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
@@ -112,42 +111,45 @@ export const AddRoundDialog: React.FC<AddRoundDialogProps> = ({
               </Popover>
             </div>
             <div>
-              <Label htmlFor="time">Time</Label>
-              <Input
+              <label htmlFor="time" className="block mb-1">Time</label>
+              <input
                 id="time"
                 type="time"
                 value={time}
                 onChange={(e) => setTime(e.target.value)}
                 required
+                className="border border-[#001F3F] rounded p-2 w-full"
               />
             </div>
             <div>
-              <Label htmlFor="venue">Venue</Label>
-              <Input
+              <label htmlFor="venue" className="block mb-1">Venue</label>
+              <input
                 id="venue"
                 value={newRound.venue}
                 onChange={(e) =>
                   setNewRound({ ...newRound, venue: e.target.value })
                 }
                 required
+                className="border border-[#001F3F] rounded p-2 w-full"
               />
             </div>
             <div>
-              <Label htmlFor="roundLink">Round Link</Label>
-              <Input
+              <label htmlFor="roundLink" className="block mb-1">Round Link</label>
+              <input
                 id="roundLink"
                 value={newRound.roundLink}
                 onChange={(e) =>
                   setNewRound({ ...newRound, roundLink: e.target.value })
                 }
+                className="border border-[#001F3F] rounded p-2 w-full"
               />
             </div>
-            <Button
+            <button
               type="submit"
-              className="w-full bg-[#001F3F] hover:bg-slate-700"
+              className="w-1/2 mx-auto bg-[#001F3F] hover:bg-slate-700 text-white rounded p-2"
             >
               Add Round
-            </Button>
+            </button>
           </div>
         </form>
       </DialogContent>
