@@ -1,9 +1,11 @@
 import React from "react";
 import { format } from "date-fns";
 import { Badge } from "@/components/ui/badge";
-import { CircleDot, LinkIcon, MapPinIcon } from "lucide-react";
+import { CircleDot, LinkIcon, MapPinIcon, Trash } from "lucide-react";
 import EditRound from "@/app/(protected)/view/_components/EditRound";
 import { Round } from "@/lib/types";
+import { deleteRound } from "@/app/actions";
+import { TheToaster } from "@/components/ui/use-toast";
 
 interface RoundsListProps {
   rounds: Round[];
@@ -11,10 +13,13 @@ interface RoundsListProps {
 }
 
 export const RoundsList: React.FC<RoundsListProps> = ({ rounds, onUpdate }) => {
+
+  const { toast } = TheToaster();
+
   return (
     <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
       {rounds.map((round) => (
-        <div key={round.id} className="w-full bg-slate-100 h-auto border border-[#001F3F] shadow-md rounded-lg overflow-hidden">
+        <div key={round.id} className="w-full bg-white h-auto border border-[#001F3F] shadow-md rounded-lg overflow-hidden">
           <div className="px-6 py-4">
             <div className="text-xl font-semibold text-[#001F3F] flex justify-between">
               <span>{round.roundTitle}</span>
@@ -30,6 +35,15 @@ export const RoundsList: React.FC<RoundsListProps> = ({ rounds, onUpdate }) => {
                   </a>
                 )}
                 <EditRound round={round} onUpdate={onUpdate} />
+                <button type="button" onClick={
+                  async () => {
+                    await deleteRound(round.id);
+                    await onUpdate();
+                    toast({
+                      title: "Round deleted successfully!",
+                    });
+                  }
+                }><Trash className="w-4 h-4 ml-4 text-red-500"/></button>
               </div>
             </div>
 
