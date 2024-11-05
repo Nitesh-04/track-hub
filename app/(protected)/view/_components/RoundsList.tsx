@@ -1,11 +1,12 @@
 import React from "react";
 import { format } from "date-fns";
 import { Badge } from "@/components/ui/badge";
-import { CircleDot, LinkIcon, MapPinIcon, Trash } from "lucide-react";
+import { CircleDot, LinkIcon, MapPinIcon} from "lucide-react";
 import EditRound from "@/app/(protected)/view/_components/EditRound";
 import { Round } from "@/lib/types";
 import { deleteRound } from "@/app/actions";
 import { TheToaster } from "@/components/ui/use-toast";
+import DeleteRoundButton from "./DeleteRound";
 
 interface RoundsListProps {
   rounds: Round[];
@@ -35,15 +36,15 @@ export const RoundsList: React.FC<RoundsListProps> = ({ rounds, onUpdate }) => {
                   </a>
                 )}
                 <EditRound round={round} onUpdate={onUpdate} />
-                <button type="button" onClick={
-                  async () => {
+                <DeleteRoundButton
+                  onDelete={async () => {
                     await deleteRound(round.id);
                     await onUpdate();
                     toast({
                       title: "Round deleted successfully!",
                     });
-                  }
-                }><Trash className="w-4 h-4 ml-4 text-red-500"/></button>
+                  }}
+                />
               </div>
             </div>
 
