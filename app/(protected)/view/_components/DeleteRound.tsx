@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useState } from 'react';
 import { Trash } from 'lucide-react';
 
@@ -28,7 +30,7 @@ export default function DeleteRoundButton({ onDelete }: DeleteRoundButtonProps) 
               <h2 className="text-lg font-semibold text-gray-900">
                 Are you absolutely sure?
               </h2>
-              <p className="mt-2 text-sm text-gray-500">
+              <p className="mt-2 font-thin text-sm text-gray-500">
                 This will permanently delete the round.
               </p>
             </div>

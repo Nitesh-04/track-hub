@@ -28,7 +28,7 @@ export default function Upcoming() {
           {Array.from({ length: 3 }).map((_, index) => (
             <CarouselItem key={index} className="md:basis-1/3">
               <div className="p-1">
-                <div className="w-full h-40 transition-transform hover:scale-95 border border-[#001F3F] rounded-md shadow-md">
+                <div className="w-full bg-slate-100 h-40 transition-transform hover:scale-95 border border-[#001F3F] rounded-md shadow-md">
                   <div className="flex h-full items-center justify-center p-6">
                     <span className="text-4xl font-semibold">{index + 1}</span>
                   </div>

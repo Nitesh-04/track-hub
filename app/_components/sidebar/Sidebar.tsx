@@ -1,14 +1,13 @@
 "use client"
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Search, PlusCircle, Settings, User } from "lucide-react";
+import { Home, Search, PlusCircle, User } from "lucide-react";
 
 const navItems = [
   { href: "/dashboard", icon: Home, label: "Dashboard" },
   { href: "/search", icon: Search, label: "Search" },
   { href: "/create", icon: PlusCircle, label: "Create" },
   { href: "/profile", icon: User, label: "Profile" },
-  { href: "/settings", icon: Settings, label: "Settings" },
 ];
 
 export default function Sidebar() {
@@ -16,7 +15,7 @@ export default function Sidebar() {
 
   return (
     <div>
-      <div className="hidden z-20 lg:flex flex-col items-center justify-start w-28 h-screen bg-[#001F3F] fixed top-0 left-0 py-8">
+      <div className="hidden z-20 lg:flex flex-col items-center justify-center w-28 h-screen bg-[#001F3F] fixed top-0 left-0 py-8">
         <nav className="mt-14">
           <ul className="space-y-8">
             {navItems.map((item, index) => {

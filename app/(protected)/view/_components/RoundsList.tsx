@@ -7,6 +7,13 @@ import { Round } from "@/lib/types";
 import { deleteRound } from "@/app/actions";
 import { TheToaster } from "@/components/ui/use-toast";
 import DeleteRoundButton from "./DeleteRound";
+import { Poppins } from "next/font/google";
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400","700"],
+});
+
 
 interface RoundsListProps {
   rounds: Round[];
@@ -22,7 +29,7 @@ export const RoundsList: React.FC<RoundsListProps> = ({ rounds, onUpdate }) => {
       {rounds.map((round) => (
         <div key={round.id} className="w-full bg-white h-auto border border-[#001F3F] shadow-md rounded-lg overflow-hidden">
           <div className="px-6 py-4">
-            <div className="text-xl font-semibold text-[#001F3F] flex justify-between">
+            <div className={`text-xl font-semibold text-[#001F3F] flex justify-between ${poppins.className}`}>
               <span>{round.roundTitle}</span>
               <div className="flex items-center">
                 {round.roundLink && (
