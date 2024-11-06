@@ -21,14 +21,29 @@ const EditRound: React.FC<EditRoundProps> = ({ round, onUpdate }) => {
     status: round.status,
   });
 
+  const [editing,setEditing] = useState(false);
+
   async function handleUpdateRound(e: React.FormEvent) {
     e.preventDefault();
-    await updateRound(round.id, editedRound);
-    toast({
-      title: "Round updated successfully!",
-    });
-    setIsOpen(false);
-    onUpdate();
+    try {
+      setEditing(true);
+      await updateRound(round.id, editedRound);
+      toast({
+        title: "Round updated successfully!",
+      });
+      setIsOpen(false);
+      onUpdate();
+      
+    } catch (error) {
+      console.error("Error updating round:", error);
+      toast({
+        variant: "destructive",
+        title: "Failed to update round",
+        description: "Please try again",
+      });
+      setEditing(false);
+      
+    }
   }
 
   const handleDateChange = (date: Date) => {
@@ -121,9 +136,10 @@ const EditRound: React.FC<EditRoundProps> = ({ round, onUpdate }) => {
             </div>
             <button
               type="submit"
+              disabled={editing}
               className="w-full bg-[#001F3F] hover:bg-slate-700 text-white rounded p-2"
             >
-              Update Round
+              {editing ? "updating round" : "Update Round"}
             </button>
           </div>
         </form>

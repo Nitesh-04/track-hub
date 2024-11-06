@@ -5,6 +5,7 @@ import { ApplicationData } from "@/lib/types";
 import { Edit } from "lucide-react";
 import { TheToaster } from "@/components/ui/use-toast";
 import { EditApplicationProps } from "@/lib/types";
+import { set } from "date-fns";
 
 const EditApplication: React.FC<EditApplicationProps> = ({ application, onUpdate }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,14 +20,28 @@ const EditApplication: React.FC<EditApplicationProps> = ({ application, onUpdate
     notifications: application.notifications,
   });
 
+  const [editing,setEditing] = useState(false);
+
   async function handleUpdateApplication(e: React.FormEvent) {
     e.preventDefault();
-    await updateApplication(application.id, editedApplication);
-    toast({
-      title: "Application edited successfully!",
-    });
-    setIsOpen(false);
-    onUpdate();
+    try {
+      setEditing(true);
+      await updateApplication(application.id, editedApplication);
+      toast({
+        title: "Application edited successfully!",
+      });
+      setIsOpen(false);
+      onUpdate();
+    } catch (error) {
+      console.error("Error updating application:", error);
+      toast({
+        variant: "destructive",
+        title: "Failed to update application",
+        description: "Please try again",
+      });
+      setEditing(false);
+    }
+
   }
 
   function handleInputChange(
@@ -121,9 +136,10 @@ const EditApplication: React.FC<EditApplicationProps> = ({ application, onUpdate
             </div>
             <button
               type="submit"
+              disabled={editing}
               className="w-1/2 mx-auto bg-[#001F3F] hover:bg-slate-700 text-white rounded p-2"
             >
-              Update Application
+              {editing ? "updating application" : "Update Application"}
             </button>
           </div>
         </form>

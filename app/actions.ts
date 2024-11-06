@@ -51,6 +51,20 @@ export async function registerUser(
     }
   }
 
+  export async function setGithubId(clerkid: string, githubid: string) {
+    try {
+        await prisma.user.update({
+            where: { clerkid },
+            data: {
+                githubid
+            }
+        });
+    } catch (error) {
+        console.error("Error setting github id:", error);
+        throw new Error("Failed to set github id");
+    }
+}
+
 export async function createApplication(formData: ApplicationData, userId: string) {
     try {
         const createdApplication = await prisma.application.create({

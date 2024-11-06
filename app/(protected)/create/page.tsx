@@ -17,6 +17,10 @@ export default function Create() {
   const { toast } = TheToaster();
   const router = useRouter();
 
+  if(!user) {
+    router.push("/sign-in");
+  }
+
   const [companyName, setCompanyName] = useState("");
   const [stipend, setStipend] = useState("");
   const [role, setRole] = useState("");
@@ -24,9 +28,11 @@ export default function Create() {
   const [locations, setLocations] = useState("");
   const [links, setLinks] = useState("");
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
+  const [creating,setCreating] = useState(false);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
+
     const formData = {
       companyName,
       stipend: parseInt(stipend),
@@ -45,6 +51,7 @@ export default function Create() {
     const userId = user.id;
 
     try {
+      setCreating(true);
       const applicationId = await createApplication(formData, userId);
       toast({
         title: "Application created successfully!",
@@ -55,6 +62,7 @@ export default function Create() {
       }, 2000);
     } catch (err) {
       console.log(err);
+      setCreating(false);
       toast({
         variant: "destructive",
         title: "Error",
@@ -62,7 +70,6 @@ export default function Create() {
       });
     }
 
-    // Reset form fields
     setCompanyName("");
     setStipend("");
     setRole("");
@@ -167,8 +174,8 @@ export default function Create() {
               </button>
               <label htmlFor="notifications" className={`text-[#001F3F] ${poppins.className}`}>Enable notifications</label>
             </div>
-            <button type="submit" className="bg-[#001F3F] text-white font-semibold py-2 px-4 md:mb-0 mb-20 rounded-md hover:bg-[#003366] transition-colors duration-200">
-              Create Application
+            <button type="submit" disabled={creating} className="bg-[#001F3F] text-white font-semibold py-2 px-4 md:mb-0 mb-20 rounded-md hover:bg-[#003366] transition-colors duration-200">
+              { creating ? "creating application ...." : "Create Application" }
             </button>
           </div>
         </form>
