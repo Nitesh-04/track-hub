@@ -6,7 +6,7 @@ import "./globals.css";
 
 
 export const metadata: Metadata = {
-  title: "wheredidyouapply",
+  title: "TrackHub",
   description: "Keep track of your internship applications",
 };
 

@@ -21,7 +21,7 @@ export default function Header() {
       <p
         className={`text-[#8dd2f2] md:mt-0 mt-1 font-bold text-lg ${poppins.className}`}
       >
-        Where Did You Apply
+        TrackHub
       </p>
       <div
         className={`right-0 hidden font-bold text-lg md:block ${poppins.className}`}

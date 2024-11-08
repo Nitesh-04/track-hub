@@ -7,9 +7,11 @@ export default function Profile() {
         <div className="bg-[#001F3F]">
             <Header />
         </div>
+        <div className="mt-20 ml-20">
             Hello
             <UserButton/>
             <SignOutButton/>
+        </div>
         </div>
     )
 }
