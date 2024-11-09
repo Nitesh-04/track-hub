@@ -39,6 +39,8 @@ const EditApplication: React.FC<EditApplicationProps> = ({ application, onUpdate
         title: "Failed to update application",
         description: "Please try again",
       });
+    }
+    finally {
       setEditing(false);
     }
 

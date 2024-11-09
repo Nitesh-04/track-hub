@@ -41,8 +41,9 @@ const EditRound: React.FC<EditRoundProps> = ({ round, onUpdate }) => {
         title: "Failed to update round",
         description: "Please try again",
       });
+    }
+    finally {
       setEditing(false);
-      
     }
   }
 
