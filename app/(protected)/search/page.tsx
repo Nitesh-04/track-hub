@@ -79,7 +79,7 @@ export default function Search() {
             )
             .map((application) => (
               <Link key={application.id} href={`view/${application.id}`}>
-                <div className="w-full h-auto bg-slate-100 transition-transform hover:scale-105 border border-[#001F3F] rounded-lg shadow-md p-6">
+                <div className="w-full h-auto bg-white hover:bg-slate-50 transition-all duration-300 border-2 border-[#001F3F]/10 hover:border-[#001F3F] rounded-xl shadow-sm hover:shadow-md p-6">
                   <div className="text-xl font-semibold text-[#001F3F] flex justify-between">
                     <p>{application.companyName}</p>
                     <p>{application.notifications ? <Bell className="w-4 h-4" /> : <BellOff className="w-4 h-4" />}</p>

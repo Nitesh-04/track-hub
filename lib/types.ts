@@ -43,6 +43,20 @@ export type RoundData = {
   status: "upcoming" | "completed";
 };
 
+export type RoundWithApplication = {
+  id: string;
+  roundTitle: string;
+  roundDateTime: Date;
+  venue: string;
+  roundLink: string | null;
+  status: "upcoming" | "completed";
+  applicationId: string;
+  userId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  application: Application;
+}
+
 export type EditApplicationProps = {
   application: {
     id: string;

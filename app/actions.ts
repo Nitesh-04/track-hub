@@ -215,6 +215,24 @@ export async function fetchRoundsByUser(userId: string) {
     }
 }
 
+export async function fetchUpcomingRoundsByUser(userId: string) {
+    try {
+        return await prisma.round.findMany({
+            where: {
+                userId,
+                roundDateTime: {
+                    gte: new Date()
+                }
+            },
+            include: { application: true },
+            orderBy: { roundDateTime: "asc" }
+        });
+    } catch (error) {
+        console.error("Error fetching upcoming rounds count:", error);
+        throw new Error("Failed to fetch upcoming rounds count");
+    }
+}
+
 export async function updateApplication(id: string, formData: ApplicationData) {
     try {
         await prisma.application.update({
