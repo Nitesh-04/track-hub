@@ -16,7 +16,7 @@ import { fetchUpcomingRoundsByUser } from "@/app/actions";
 import Header from "../header/Header";
 import { Badge } from "@/components/ui/badge";
 import { MapPinIcon, Calendar, Clock } from "lucide-react";
-import { format } from "date-fns";
+import { differenceInDays, differenceInHours, differenceInMinutes, format } from "date-fns";
 import Link from "next/link";
 
 const poppins = Poppins({
@@ -73,7 +73,7 @@ export default function Upcoming() {
   }
 
   return (
-    <div className="md:px-14 md:py-2 py-0 px-2 pt-2 mt-14">
+    <div className="md:px-14 md:py-2 py-0 px-6 pt-2 mt-14">
       <p
         className={`font-bold text-[#001F3F] text-xl md:text-2xl mb-4 ${poppins.className}`}
       >
@@ -147,8 +147,34 @@ export default function Upcoming() {
                     <div className="mt-2 flex items-center gap-2">
                       <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
                       <span className="text-xs font-medium text-gray-500">
-                        Upcoming in{" "}
-                        {format(new Date(round.roundDateTime), "dd")} days
+                        {(() => {
+                          const daysDiff = differenceInDays(
+                            new Date(round.roundDateTime),
+                            new Date()
+                          );
+                          const hoursDiff = differenceInHours(
+                            new Date(round.roundDateTime),
+                            new Date()
+                          );
+                          const minutesDiff = differenceInMinutes(
+                            new Date(round.roundDateTime),
+                            new Date()
+                          );
+
+                          if (daysDiff === 0) {
+                            if (hoursDiff === 0) {
+                              return `Upcoming in ${minutesDiff} ${
+                                minutesDiff === 1 ? "minute" : "minutes"
+                              }`;
+                            }
+                            return `Upcoming in ${hoursDiff} ${
+                              hoursDiff === 1 ? "hour" : "hours"
+                            }`;
+                          }
+                          return `Upcoming in ${daysDiff} ${
+                            daysDiff === 1 ? "day" : "days"
+                          }`;
+                        })()}
                       </span>
                     </div>
                   </div>
@@ -162,9 +188,9 @@ export default function Upcoming() {
       )}
       {rounds.length > 0 && (
         <p
-          className={`md:hidden flex text-bold text-[#001F3F] justify-center mt-2 ${poppins.className}`}
+          className={`md:hidden flex text-bold text-xs text-[#001F3F] justify-center mt-2 ${poppins.className}`}
         >
-          Swipe {`>`}
+          See more {`>`}
         </p>
       )}
     </div>
