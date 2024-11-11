@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TrackHub
+### Description
+TrackHub is a platform for managing internship applications. It tracks application statuses, deadlines, and relevant dates, helping users stay organized. With features like reminders and adding applications, TrackHub offers a streamlined dashboard for easy access to important information.
 
-## Getting Started
+### Features
 
-First, run the development server:
+- Track Applications: Keep all your internship applications organized and easily accessible in one place, making it simple to monitor your progress.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Add Rounds: Add and manage interview rounds, tests, and other application steps specific to each internship, customizing the process to your needs.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Stay Updated: Track the progress of each application by updating its status, from submitted to coding to interview to offer, all in one intuitive dashboard.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Set Reminders: (Coming Soon) Stay ahead by setting reminders for important deadlines, upcoming interviews, or coding challenges, ensuring you never miss an opportunity.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+### Inorder to test the application locally:
+1. Clone the repository: `git clone https://github.com/Nitesh-04/track-hub.git`
+2. Install dependencies: `npm install`
+3. Set Environment Variables:
+     ```
+     DATABASE_URL=
+     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+     CLERK_SECRET_KEY=
+     NEXT_PUBLIC_CLERK_SIGN_IN_URL=
+     NEXT_PUBLIC_CLERK_SIGN_UP_URL=
+     NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL=
+     NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL=
+     ```
+4. Migrate Prisma Scehmas: `npx prisma migrate dev --name migration_name` and then `npx prisma generate`  
+5. Run the local server: `npm run dev`
 
-To learn more about Next.js, take a look at the following resources:
+### Tech Stack Used
+- Next.js
+- Typescript
+- Clerk Auth
+- ShadCN UI
+- Prisma
+- Cron Jobs
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Have any queries?
+Feel free to contact me on LinkedIn ! You can find the my socials at my GitHub Profile.
