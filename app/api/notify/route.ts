@@ -9,7 +9,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
 
-  await fetchAndNotify(2 * 60); // 2-hour reminders
+  await fetchAndNotify(24 * 60); // 24-hour reminders
 
   return NextResponse.json({ message: '2-hour notifications sent' });
 }
