@@ -68,7 +68,7 @@ const EmailTemplate: React.FC<EmailTemplateProps> = ({ subject, roundDateTime, r
         <div className="container">
           <p>Hi there,</p>
           <p>
-            Just a quick reminder that the application round <span className="highlight">"{subject}"</span> is approaching.
+            Just a quick reminder that the application round <span className="highlight">{subject}</span> is approaching.
           </p>
           <div className="info-section">
             <p><span className="highlight">Date and Time:</span> {roundDateTime.toLocaleString()}</p>
