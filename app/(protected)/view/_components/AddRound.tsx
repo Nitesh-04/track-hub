@@ -1,5 +1,5 @@
 import React, { FormEvent, useState } from "react";
-import { format } from "date-fns";
+import { format, set } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Calendar } from "@/components/ui/calendar";
@@ -26,6 +26,7 @@ export const AddRoundDialog: React.FC<AddRoundDialogProps> = ({
     venue: "",
     roundLink: "",
   });
+  const [editing,setEditing] = useState(false);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -46,11 +47,19 @@ export const AddRoundDialog: React.FC<AddRoundDialogProps> = ({
       status: combinedDateTime < new Date() ? "completed" : "upcoming",
     };
 
-    await onAddRound(roundData);
-    setNewRound({ roundTitle: "", venue: "", roundLink: "" });
-    setDate(undefined);
-    setTime("");
-    setIsOpen(false);
+    try {
+      setEditing(true);
+      await onAddRound(roundData);
+      setNewRound({ roundTitle: "", venue: "", roundLink: "" });
+      setDate(undefined);
+      setTime("");
+      setIsOpen(false);
+    } catch (error) {
+      console.error("Error adding round:", error);
+    }
+    finally {
+      setEditing(false);
+    }
   }
 
   return (
@@ -146,6 +155,7 @@ export const AddRoundDialog: React.FC<AddRoundDialogProps> = ({
             </div>
             <button
               type="submit"
+              disabled={editing}
               className="w-1/2 mx-auto bg-[#001F3F] hover:bg-slate-700 text-white rounded p-2"
             >
               Add Round

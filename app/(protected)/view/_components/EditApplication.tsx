@@ -5,7 +5,6 @@ import { ApplicationData } from "@/lib/types";
 import { Edit } from "lucide-react";
 import { TheToaster } from "@/components/ui/use-toast";
 import { EditApplicationProps } from "@/lib/types";
-import { set } from "date-fns";
 
 const EditApplication: React.FC<EditApplicationProps> = ({ application, onUpdate }) => {
   const [isOpen, setIsOpen] = useState(false);
