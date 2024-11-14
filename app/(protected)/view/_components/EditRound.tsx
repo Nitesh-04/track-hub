@@ -140,7 +140,7 @@ const EditRound: React.FC<EditRoundProps> = ({ round, onUpdate }) => {
               disabled={editing}
               className="w-full bg-[#001F3F] hover:bg-slate-700 text-white rounded p-2"
             >
-              {editing ? "updating round" : "Update Round"}
+              {editing ? "Updating..." : "Update Round"}
             </button>
           </div>
         </form>

@@ -26,7 +26,7 @@ export const AddRoundDialog: React.FC<AddRoundDialogProps> = ({
     venue: "",
     roundLink: "",
   });
-  const [editing,setEditing] = useState(false);
+  const [loading,setloading] = useState(false);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -48,7 +48,7 @@ export const AddRoundDialog: React.FC<AddRoundDialogProps> = ({
     };
 
     try {
-      setEditing(true);
+      setloading(true);
       await onAddRound(roundData);
       setNewRound({ roundTitle: "", venue: "", roundLink: "" });
       setDate(undefined);
@@ -58,7 +58,7 @@ export const AddRoundDialog: React.FC<AddRoundDialogProps> = ({
       console.error("Error adding round:", error);
     }
     finally {
-      setEditing(false);
+      setloading(false);
     }
   }
 
@@ -155,10 +155,10 @@ export const AddRoundDialog: React.FC<AddRoundDialogProps> = ({
             </div>
             <button
               type="submit"
-              disabled={editing}
+              disabled={loading}
               className="w-1/2 mx-auto bg-[#001F3F] hover:bg-slate-700 text-white rounded p-2"
             >
-              Add Round
+              {loading ? "Adding..." : "Add Round" }
             </button>
           </div>
         </form>

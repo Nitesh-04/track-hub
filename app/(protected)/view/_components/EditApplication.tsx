@@ -140,7 +140,7 @@ const EditApplication: React.FC<EditApplicationProps> = ({ application, onUpdate
               disabled={editing}
               className="w-1/2 mx-auto bg-[#001F3F] hover:bg-slate-700 text-white rounded p-2"
             >
-              {editing ? "updating application" : "Update Application"}
+              {editing ? "Updating..." : "Update Application"}
             </button>
           </div>
         </form>
