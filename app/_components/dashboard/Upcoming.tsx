@@ -42,7 +42,6 @@ export default function Upcoming() {
       setIsLoading(true);
       try {
         const data = await fetchUpcomingRoundsByUser(userId);
-        console.log(data);
         if (!data) {
           throw new Error("Rounds not found");
         }

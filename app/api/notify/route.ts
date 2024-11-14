@@ -9,39 +9,34 @@ export async function GET(request: Request) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
 
-  await fetchAndNotify(24 * 60); // 24-hour reminders
+  const now = new Date();
+  const targetTime = new Date(now.getTime() + 24 * 60 * 60 * 1000); 
+
+  await fetchAndNotify(now,targetTime);
 
   return NextResponse.json({ message: '24-hour notifications sent' });
 }
 
-async function fetchAndNotify(timeDifferenceMinutes: number) {
-  const now = new Date();
-  const targetTime = new Date(now.getTime() + timeDifferenceMinutes * 60 * 1000);
-  const bufferTime = 5 * 60 * 1000; // 5-minute buffer
-
+async function fetchAndNotify(now:Date,targetTime: Date) {
   const upcomingEvents = await prisma.round.findMany({
     where: {
       roundDateTime: {
-        gte: new Date(targetTime.getTime() - bufferTime),
-        lte: new Date(targetTime.getTime() + bufferTime),
+        gte: new Date(now.getTime()),
+        lte: new Date(targetTime.getTime()),
       },
     },
     include: {
-        user: {
-            select: {
-            email: true,
-            },
-        },
-        application: true,
-        },
+      user: {
+        select: { email: true },
+      },
+      application: true,
+    },
   });
-  console.log(upcomingEvents);
 
   for (const round of upcomingEvents) {
-    if(round.application.notifications==true)
-      {
-        const subject = round.application.companyName + " - " + round.roundTitle;
-        await sendEventReminder(round.user.email, subject , round.roundDateTime, round.venue, round.roundLink ?? '');
-      }
+    if (round.application.notifications === true) {
+      const subject = `${round.application.companyName} - ${round.roundTitle}`;
+      await sendEventReminder(round.user.email, subject, round.roundDateTime, round.venue, round.roundLink ?? '');
+    }
   }
 }
