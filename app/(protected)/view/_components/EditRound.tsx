@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -21,19 +21,37 @@ const EditRound: React.FC<EditRoundProps> = ({ round, onUpdate }) => {
     status: round.status,
   });
 
-  const [editing,setEditing] = useState(false);
+  const [editing, setEditing] = useState(false);
+
+  const currentDate = new Date(editedRound.roundDateTime);
+  const currentTime = format(currentDate, "HH:mm");
+
+  const [time, setTime] = useState(currentTime);
+
+  useEffect(() => {
+    const currentDate = new Date(editedRound.roundDateTime);
+    setTime(format(currentDate, "HH:mm"));
+  }, [editedRound.roundDateTime]);
 
   async function handleUpdateRound(e: React.FormEvent) {
     e.preventDefault();
     try {
       setEditing(true);
-      await updateRound(round.id, editedRound);
+      const updatedRound = {
+        ...editedRound,
+        roundDateTime: new Date(
+          new Date(editedRound.roundDateTime).setHours(
+            parseInt(time.split(":")[0]),
+            parseInt(time.split(":")[1])
+          )
+        ).getTime(),
+      };
+      await updateRound(round.id, updatedRound);
       toast({
         title: "Round updated successfully!",
       });
       setIsOpen(false);
       onUpdate();
-      
     } catch (error) {
       console.error("Error updating round:", error);
       toast({
@@ -41,8 +59,7 @@ const EditRound: React.FC<EditRoundProps> = ({ round, onUpdate }) => {
         title: "Failed to update round",
         description: "Please try again",
       });
-    }
-    finally {
+    } finally {
       setEditing(false);
     }
   }
@@ -115,6 +132,17 @@ const EditRound: React.FC<EditRoundProps> = ({ round, onUpdate }) => {
                   />
                 </PopoverContent>
               </Popover>
+            </div>
+            <div>
+              <label htmlFor="time" className="block mb-1">Time</label>
+              <input
+                id="time"
+                type="time"
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
+                required
+                className="border border-[#001F3F] rounded p-2 w-full"
+              />
             </div>
             <div>
               <label htmlFor="venue" className="block mb-1">Venue</label>
