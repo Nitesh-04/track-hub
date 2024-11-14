@@ -35,6 +35,7 @@ async function fetchAndNotify(timeDifferenceMinutes: number) {
         application: true,
         },
   });
+  console.log(upcomingEvents);
 
   for (const round of upcomingEvents) {
     if(round.application.notifications==true)
