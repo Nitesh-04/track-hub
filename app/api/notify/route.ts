@@ -11,7 +11,7 @@ export async function GET(request: Request) {
 
   await fetchAndNotify(24 * 60); // 24-hour reminders
 
-  return NextResponse.json({ message: '2-hour notifications sent' });
+  return NextResponse.json({ message: '24-hour notifications sent' });
 }
 
 async function fetchAndNotify(timeDifferenceMinutes: number) {
