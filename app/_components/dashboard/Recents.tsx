@@ -16,6 +16,9 @@ import { Badge } from "@/components/ui/badge";
 import { MapPinIcon, Bell, BellOff, PenLine } from "lucide-react";
 import Link from "next/link";
 import { fetchRecentApplicationsByUser } from "@/app/actions";
+import { set } from "date-fns";
+import Header from "../header/Header";
+import SkeletonCard from "./LoadSkeleton";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -26,6 +29,7 @@ export default function Recents() {
   const router = useRouter();
   const { user } = useUser();
   const [applications,setApplications] = useState<Application[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (!user) {
@@ -36,6 +40,7 @@ export default function Recents() {
     const userId = user.id;
 
     async function fetchData() {
+      setIsLoading(true);
       try {
         const data = await fetchRecentApplicationsByUser(userId);
         if (!data) {
@@ -44,11 +49,27 @@ export default function Recents() {
         setApplications(data);
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false);
       }
     }
 
     fetchData();
   }, [user, router]);
+
+
+  if (isLoading) {
+    return (
+      <div className="h-full w-full">
+        <div className="mb-14 bg-[#001F3F]">
+          <Header />
+        </div>
+        <div className="container mx-auto px-4">
+          <SkeletonCard/>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="md:px-14 md:py-2 py-0 px-6 pt-2 mt-4">

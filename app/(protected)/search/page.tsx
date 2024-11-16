@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { Application } from "@/lib/types";
+import { SearchSkeletonCard } from "@/app/_components/dashboard/search/SearchSkeleton";
 
 export default function Search() {
   const router = useRouter();
@@ -49,9 +50,7 @@ export default function Search() {
           <Header />
         </div>
         <div className="container mx-auto px-4 py-8">
-          <div className="flex items-center justify-center h-64">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#001F3F]"></div>
-          </div>
+          <SearchSkeletonCard/>
         </div>
       </div>
     );

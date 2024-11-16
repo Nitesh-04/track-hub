@@ -18,6 +18,7 @@ import { Badge } from "@/components/ui/badge";
 import { MapPinIcon, Calendar, Clock } from "lucide-react";
 import { differenceInDays, differenceInHours, differenceInMinutes, format } from "date-fns";
 import Link from "next/link";
+import SkeletonCard from "./LoadSkeleton";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -63,9 +64,7 @@ export default function Upcoming() {
           <Header />
         </div>
         <div className="container mx-auto px-4 py-8">
-          <div className="flex items-center justify-center h-64">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#001F3F]"></div>
-          </div>
+          <SkeletonCard/>
         </div>
       </div>
     );
