@@ -175,7 +175,7 @@ export default function Create() {
               <label htmlFor="notifications" className={`text-[#001F3F] ${poppins.className}`}>Enable notifications</label>
             </div>
             <button type="submit" disabled={creating} className="bg-[#001F3F] text-white font-semibold py-2 px-4 md:mb-0 mb-20 rounded-md hover:bg-[#003366] transition-colors duration-200">
-              { creating ? "creating application ...." : "Create Application" }
+              { creating ? "Creating ...." : "Create Application" }
             </button>
           </div>
         </form>

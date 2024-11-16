@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Header from "@/app/_components/header/Header";
 import { Badge } from "@/components/ui/badge";
 import { fetchApplicationByUser } from "@/app/actions";
-import { Bell, BellOff, MapPinIcon } from "lucide-react";
+import { Bell, BellOff, MapPinIcon, PenLine } from "lucide-react";
 import Link from "next/link";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
@@ -71,6 +71,22 @@ export default function Search() {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
+      {applications.length === 0 ? (
+        <div className="px-10 lg:px-20 mt-20">
+        <div className="px-4 w-full h-40 py-8 flex flex-col md:flex-row gap-4 items-center justify-center bg-slate-50 rounded-xl border-2 border-dashed border-[#001F3F]/20">
+          <PenLine className="w-10 h-10 text-[#001F3F]/30" />
+          <h3 className="text-xl font-semibold text-[#001F3F] md:mr-20">
+            No Applications Created
+          </h3>
+          <Link
+            href="/create"
+            className="px-4 py-2 md:mt-0 mt-2 md:mb-0 mb-2 bg-[#001F3F] text-white rounded-lg hover:bg-[#001F3F]/90 transition-colors"
+          >
+            Create a New Application
+          </Link>
+        </div>
+        </div>
+      ) : (
       <div className="container mx-auto px-4 md:px-8 py-8 mt-2 mb-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {applications
@@ -102,6 +118,7 @@ export default function Search() {
             ))}
         </div>
       </div>
+      )}
     </div>
   );
 }

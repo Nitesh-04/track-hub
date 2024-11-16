@@ -4,6 +4,7 @@ import Upcoming from "@/app/_components/dashboard/Upcoming";
 import Header from "@/app/_components/header/Header";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
+import Recents from "@/app/_components/dashboard/Recents";
 
 
 export default function Dashboard() {
@@ -23,6 +24,7 @@ export default function Dashboard() {
     <div className="h-full w-full">
       <div className="mb-10 bg-[#001F3F] "><Header/></div>
       <Upcoming />
+      <Recents />
     </div>
   );
 }

@@ -180,6 +180,19 @@ export async function fetchApplicationByUser(userId: string) {
     }
 }
 
+export async function fetchRecentApplicationsByUser(userId: string) {
+    try {
+        return await prisma.application.findMany({
+            where: { userId },
+            orderBy: { updatedAt: "desc" },
+            take: 3
+        });
+    } catch (error) {
+        console.error("Error fetching recent applications:", error);
+        throw new Error("Failed to fetch recent applications");
+    }
+}
+
 export async function fetchRoundByApplicationId(applicationId: string) {
     try {
         const rounds = await prisma.round.findMany({

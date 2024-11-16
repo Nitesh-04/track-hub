@@ -72,21 +72,21 @@ export default function Upcoming() {
   }
 
   return (
-    <div className="md:px-14 md:py-2 py-0 px-6 pt-2 mt-14">
+    <div className="md:px-14 md:py-2 py-0 px-6 pt-2 mt-12">
       <p
         className={`font-bold text-[#001F3F] text-xl md:text-2xl mb-4 ${poppins.className}`}
       >
-        Upcoming events
+        Upcoming rounds
       </p>
       {rounds.length === 0 ? (
         <div className="w-full h-40 py-2 flex flex-col md:flex-row gap-4 items-center justify-center px-4 bg-slate-50 rounded-xl border-2 border-dashed border-[#001F3F]/20">
           <Calendar className="w-10 h-10 text-[#001F3F]/30" />
           <h3 className="text-xl font-semibold text-[#001F3F] md:mr-20">
-            No Upcoming Events
+            No Upcoming Rounds
           </h3>
           <Link
             href="/search"
-            className="px-4 py-2 md:mt-0 mt-2 md:mb-0 mb-2 bg-[#001F3F] text-white rounded-lg hover:bg-[#001F3F]/90 transition-colors"
+            className="px-4 py-2 md:mt-0 mt-2 md:mb-0 mb-2 bg-slate-100 text-[#001F3F] rounded-lg border-2 border-dashed border-[#001F3F]/20 transition-colors"
           >
             View All Applications
           </Link>
@@ -189,7 +189,7 @@ export default function Upcoming() {
         <p
           className={`md:hidden flex text-bold text-xs text-[#001F3F] justify-center mt-2 ${poppins.className}`}
         >
-          See more {`>`}
+          Swipe to see more {`>`}
         </p>
       )}
     </div>
