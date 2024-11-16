@@ -9,7 +9,7 @@ import Link from "next/link";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { Application } from "@/lib/types";
-import { SearchSkeletonCard } from "@/app/_components/dashboard/search/SearchSkeleton";
+import { SearchSkeletonCard } from "@/app/_components/search/SearchSkeleton";
 
 export default function Search() {
   const router = useRouter();

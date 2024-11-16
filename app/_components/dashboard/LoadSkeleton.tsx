@@ -23,7 +23,7 @@ export default function SkeletonCard() {
   }, []);
 
   return (
-    <div className="md:px-20 px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
+    <div className="md:px-20 mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
       {Array.from({ length: numCards }).map((_, index) => (
         <div key={index} className="flex flex-col space-y-3">
           <Skeleton className="h-[125px] w-[250px] rounded-xl" />
