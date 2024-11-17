@@ -14,11 +14,12 @@ export async function GET(request: Request) {
   }
 
   const now = getISTDate(new Date());
-  now.setHours(0, 0, 0, 0);
   
   const targetTime = new Date(now);
-  targetTime.setDate(targetTime.getDate() + 1);
-  targetTime.setHours(23, 59, 59, 999);
+  targetTime.setHours(targetTime.getHours() + 24);
+
+  console.log(now);
+  console.log(targetTime);
 
   await fetchAndNotify(now, targetTime);
 
