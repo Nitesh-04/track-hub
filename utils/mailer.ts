@@ -8,8 +8,6 @@ const smtpConfig = {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
     },
-    logger: true,
-    debug: true,
 };
 
 type EmailConfig = {
@@ -20,19 +18,14 @@ type EmailConfig = {
 
 export async function sendEmail(data: EmailConfig) {
   try {
-    const transporter  = nodemailer.createTransport(
-      {
-        ...smtpConfig
-      });
+    const transporter = nodemailer.createTransport(smtpConfig);
 
-    return await transporter.sendMail(
-      {
-        from: process.env.EMAIL_USER,
-        to: data.to,
-        subject: data.subject,
-        html: data.htmlContent,
-      }
-    );
+    return await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: data.to,
+      subject: data.subject,
+      html: data.htmlContent,
+    });
   } catch (error) {
     console.error("Error sending email:", error);
     throw error;
