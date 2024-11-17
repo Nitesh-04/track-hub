@@ -6,6 +6,12 @@ interface EmailTemplateProps {
 }
 
 const EmailTemplate = ({ subject, roundDateTime, roundVenue, roundLink }: EmailTemplateProps) => {
+  const formattedDate = roundDateTime.toLocaleString('en-US', {
+    timeZone: 'Asia/Kolkata',
+    dateStyle: 'full',
+    timeStyle: 'long'
+  });
+
   return `
     <!DOCTYPE html>
     <html>
@@ -65,12 +71,12 @@ const EmailTemplate = ({ subject, roundDateTime, roundVenue, roundLink }: EmailT
         <div class="container">
           <p>Hi there,</p>
           <p>
-            Just a quick reminder that your round <span class="highlight">${subject}</span> is approaching.
+            Just a quick reminder that your application round <span class="highlight">${subject}</span> is approaching.
           </p>
           <div class="info-section">
-            <p><span class="highlight">Date and Time:</span> ${roundDateTime.toLocaleString()}</p>
+            <p><span class="highlight">Date and Time:</span> ${formattedDate}</p>
             <p><span class="highlight">Venue:</span> ${roundVenue}</p>
-            <p><span class="highlight">Link:</span> <a href="${roundLink}" class="link">Click here</a></p>
+            <p><span class="highlight">Link:</span> <a href="${roundLink}" class="link">Click Here</a></p>
           </div>
           <div class="footer">
             <p>

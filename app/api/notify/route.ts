@@ -4,25 +4,33 @@ import { sendEventReminder } from '@/utils/email';
 
 const prisma = new PrismaClient();
 
+function getISTDate(date: Date): Date {
+  return new Date(date.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+}
+
 export async function GET(request: Request) {
   if (request.headers.get('Authorization') !== `Bearer ${process.env.CRON_SECRET}`) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
 
-  const now = new Date();
-  const targetTime = new Date(now.getTime() + 24 * 60 * 60 * 1000); 
+  const now = getISTDate(new Date());
+  now.setHours(0, 0, 0, 0);
+  
+  const targetTime = new Date(now);
+  targetTime.setDate(targetTime.getDate() + 1);
+  targetTime.setHours(23, 59, 59, 999);
 
-  await fetchAndNotify(now,targetTime);
+  await fetchAndNotify(now, targetTime);
 
-  return NextResponse.json({ message: '24-hour notifications sent' });
+  return NextResponse.json({ message: 'Notifications sent' });
 }
 
-async function fetchAndNotify(now:Date,targetTime: Date) {
+async function fetchAndNotify(now: Date, targetTime: Date) {
   const upcomingEvents = await prisma.round.findMany({
     where: {
       roundDateTime: {
-        gte: new Date(now.getTime()),
-        lte: new Date(targetTime.getTime()),
+        gte: now,
+        lte: targetTime,
       },
     },
     include: {
@@ -35,8 +43,21 @@ async function fetchAndNotify(now:Date,targetTime: Date) {
 
   for (const round of upcomingEvents) {
     if (round.application.notifications === true) {
-      const subject = `${round.application.companyName} - ${round.roundTitle}`;
-      await sendEventReminder(round.user.email, subject, round.roundDateTime, round.venue, round.roundLink ?? '');
+      try {
+        const subject = `${round.application.companyName} - ${round.roundTitle}`;
+        
+        await sendEventReminder(
+          round.user.email, 
+          subject, 
+          round.roundDateTime,  
+          round.venue, 
+          round.roundLink ?? ''
+        );
+
+      } catch (error) {
+        console.error(`Failed to send notification for round ${round.id}:`, error);
+      }
     }
   }
+  console.log(` ${upcomingEvents.length} Notifications sent`);
 }
