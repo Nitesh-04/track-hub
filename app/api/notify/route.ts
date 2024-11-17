@@ -18,9 +18,6 @@ export async function GET(request: Request) {
   const targetTime = new Date(now);
   targetTime.setHours(targetTime.getHours() + 24);
 
-  console.log(now);
-  console.log(targetTime);
-
   await fetchAndNotify(now, targetTime);
 
   return NextResponse.json({ message: 'Notifications sent' });
