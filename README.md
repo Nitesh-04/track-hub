@@ -10,7 +10,7 @@ TrackHub is a platform for managing internship applications. It tracks applicati
 
 - Stay Updated: Track the progress of each application by updating its status, from submitted to coding to interview to offer, all in one intuitive dashboard.
 
-- Set Reminders: (Coming Soon) Stay ahead by setting reminders for important deadlines, upcoming interviews, or coding challenges, ensuring you never miss an opportunity.
+- Get Reminders: Stay updated by recieving reminders for important upcoming interviews, or coding rounds, ppt, ensuring you never miss an opportunity.
 
 
 ### Inorder to test the application locally:
