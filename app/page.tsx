@@ -10,6 +10,7 @@ import HowItWorksCarousel from "@/app/_components/landing/HowItWorks";
 import Image from "next/image";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
+import AboutUs from "./_components/landing/AboutUs";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -62,8 +63,11 @@ export default function Home() {
       <div id="features">
         <Features/>
       </div>
-      <div id="how-it-works">
+      <div id="howitworks">
         <HowItWorksCarousel/>
+      </div>
+      <div id="aboutus">
+        <AboutUs/>
       </div>
     </div>
   );

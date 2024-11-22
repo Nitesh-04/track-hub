@@ -21,8 +21,8 @@ export default function Features() {
         icon : <PlusIcon className="w-6 h-6 text-[#001F3F]"/>
       },
     {
-      title: "Set Reminders",
-      description: "Set reminders for your upcoming coding and interview rounds.",
+      title: "Get Reminders",
+      description: "Get reminders for your upcoming coding and interview rounds.",
       icon : <BellIcon className="w-6 h-6 text-[#001F3F]"/>
     },
     {

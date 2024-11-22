@@ -8,7 +8,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, PenIcon } from "lucide-react";
 import { Poppins } from "next/font/google";
 import Link from "next/link";
 import { Button } from "../../../components/ui/button";
@@ -37,14 +37,14 @@ export default function HowItWorksCarousel() {
       icon: <BellIcon className="w-6 h-6 text-[#001F3F]"/>,
     },
     {
-      title: "4. View Upcoming Events",
-      description: "Easily view all your upcoming application deadlines.",
-      icon: <FileTextIcon className="w-6 h-6 text-[#001F3F]"/>,
+      title: "4. Add Rounds",
+      description: "Log the details of upcoming interviews and tests.",
+      icon: <PenIcon className="w-6 h-6 text-[#001F3F]"/>,
     },
     {
-      title: "5. Edit or Delete Applications",
-      description: "To add or remove applications, simply edit or delete them.",
-      icon: <CrumpledPaperIcon className="w-6 h-6 text-[#001F3F]"/>,
+      title: "5. View Upcoming Events",
+      description: "Easily manage all your upcoming application deadlines in the dashboard",
+      icon: <FileTextIcon className="w-6 h-6 text-[#001F3F]"/>,
     },
   ];
 
