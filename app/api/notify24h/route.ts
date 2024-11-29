@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import { sendEventReminder } from '@/utils/email';
+import { cookies } from 'next/headers';
 
 const prisma = new PrismaClient();
 
@@ -14,9 +15,11 @@ export async function GET(request: Request) {
   }
 
   const now = getISTDate(new Date());
+  console.log(`Now: ${now.toISOString()}`);
   
   const targetTime = new Date(now);
   targetTime.setHours(targetTime.getHours() + 24);
+  console.log(`Target Time: ${targetTime.toISOString()}`);
 
   await fetchAndNotify(now, targetTime);
 
