@@ -1,20 +1,15 @@
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import { sendEventReminder } from '@/utils/email';
-import { cookies } from 'next/headers';
 
 const prisma = new PrismaClient();
-
-function getISTDate(date: Date): Date {
-  return new Date(date.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
-}
 
 export async function GET(request: Request) {
   if (request.headers.get('Authorization') !== `Bearer ${process.env.CRON_SECRET}`) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
 
-  const now = getISTDate(new Date());
+  const now = new Date();
   console.log(`Now: ${now.toISOString()}`);
   
   const targetTime = new Date(now);
