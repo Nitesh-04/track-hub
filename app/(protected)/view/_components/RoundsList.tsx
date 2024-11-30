@@ -25,7 +25,7 @@ export const RoundsList: React.FC<RoundsListProps> = ({ rounds, onUpdate }) => {
   const { toast } = TheToaster();
 
   return (
-    <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
+    <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 md:mb-0 mb-20">
       {rounds.map((round) => (
         <div key={round.id} className="w-full bg-white h-auto border border-[#001F3F] shadow-md rounded-lg overflow-hidden">
           <div className="px-6 py-4">

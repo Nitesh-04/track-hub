@@ -14,6 +14,7 @@ export async function GET(request: Request) {
   const targetTime = new Date(now);
   
   targetTime.setHours(targetTime.getHours() + 1);
+  targetTime.setMinutes(targetTime.getMinutes() + 1);
 
   await fetchAndNotify(now, targetTime);
 

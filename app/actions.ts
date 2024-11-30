@@ -205,6 +205,9 @@ export async function fetchRoundByApplicationId(applicationId: string) {
             if (round.roundDateTime < currentTime) {
                 return { ...round, status: "completed" };
             }
+            else if (round.roundDateTime > currentTime) {
+                return { ...round, status: "upcoming" };
+            }
             return round;
         });
 
