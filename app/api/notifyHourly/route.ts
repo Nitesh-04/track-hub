@@ -10,11 +10,10 @@ export async function GET(request: Request) {
   }
 
   const now = new Date();
+  now.setMinutes(now.getMinutes() - 1);
   
   const targetTime = new Date(now);
-  
   targetTime.setHours(targetTime.getHours() + 1);
-  targetTime.setMinutes(targetTime.getMinutes() + 1);
 
   await fetchAndNotify(now, targetTime);
 
