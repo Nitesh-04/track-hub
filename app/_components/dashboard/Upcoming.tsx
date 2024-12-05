@@ -101,7 +101,7 @@ export default function Upcoming() {
                 <Link href={`/view/${round.application.id}`} passHref>
                   <div className="group w-full h-full bg-white hover:bg-slate-50 transition-all duration-300 border-2 border-[#001F3F]/10 hover:border-[#001F3F] rounded-xl shadow-sm hover:shadow-md p-4">
                     <div className="flex flex-col gap-2 pb-4">
-                      <h3 className="text-xl font-bold text-[#001F3F] group-hover:text-[#001F3F]/80 transition-colors">
+                      <h3 className="text-xl truncate font-bold text-[#001F3F] group-hover:text-[#001F3F]/80 transition-colors">
                         {round.application.companyName}
                       </h3>
                       <div className="flex gap-4">
