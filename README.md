@@ -12,27 +12,6 @@ TrackHub is a platform for managing internship applications. It tracks applicati
 
 - Get Reminders: Stay updated by recieving reminders for important upcoming interviews, or coding rounds, ppt, ensuring you never miss an opportunity.
 
-
-### Inorder to test the application locally:
-1. Clone the repository: `git clone https://github.com/Nitesh-04/track-hub.git`
-2. Install dependencies: `npm install`
-3. Set Environment Variables:
-     ```
-     DATABASE_URL=
-     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
-     CLERK_SECRET_KEY=
-     NEXT_PUBLIC_CLERK_SIGN_IN_URL=
-     NEXT_PUBLIC_CLERK_SIGN_UP_URL=
-     NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL=
-     NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL=
-     CRON_SECRET=
-     MAIL_HOST=
-     EMAIL_USER=
-     EMAIL_PASS=
-     ```
-4. Migrate Prisma Scehmas: `npx prisma migrate dev --name migration_name` and then `npx prisma generate`  
-5. Run the local server: `npm run dev`
-
 ### Tech Stack Used
 - Next.js
 - Typescript
