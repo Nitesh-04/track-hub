@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Header from "@/app/_components/header/Header";
 import { Badge } from "@/components/ui/badge";
-import { fetchApplicationByUser } from "@/app/actions";
+import { fetchApplicationByUser } from "./_actions/actions";
 import { Bell, BellOff, MapPinIcon, PenLine } from "lucide-react";
 import Link from "next/link";
 import { useUser } from "@clerk/nextjs";

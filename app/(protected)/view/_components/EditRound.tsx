@@ -4,7 +4,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
-import { updateRound } from "@/app/actions";
+import { updateRound } from "../_actions/actions";
 import { RoundData } from "@/lib/types";
 import { CalendarIcon, Edit } from "lucide-react";
 import { TheToaster } from "@/components/ui/use-toast";

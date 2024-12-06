@@ -5,16 +5,16 @@ import Header from "@/app/_components/header/Header";
 import { Badge } from "@/components/ui/badge";
 import { MapPinIcon, LinkIcon} from "lucide-react";
 import { Poppins } from "next/font/google";
-import { AddRoundDialog } from "@/app/(protected)/view/_components/AddRound";
-import { RoundsList } from "@/app/(protected)/view/_components/RoundsList";
-import EditApplication from "@/app/(protected)/view/_components/EditApplication";
-import { fetchApplicationById, createRound, fetchRoundByApplicationId, deletedApplication } from "@/app/actions";
+import { AddRoundDialog } from "../_components/AddRound";
+import { RoundsList } from "../_components/RoundsList";
+import EditApplication from "../_components/EditApplication";
+import DeleteApplicationButton from "../_components/DeleteApplication";
+import { fetchApplicationById, createRound, fetchRoundByApplicationId, deletedApplication } from "../_actions/actions";
 import { RoundData } from "@/lib/types";
 import { useUser } from "@clerk/nextjs";
 import { TheToaster } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { Application, Round } from "@/lib/types";
-import DeleteApplicationButton from "../_components/DeleteApplication";
 
 const poppins = Poppins({
   subsets: ["latin"],

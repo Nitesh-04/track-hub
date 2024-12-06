@@ -15,9 +15,8 @@ import { Application } from "@/lib/types";
 import { Badge } from "@/components/ui/badge";
 import { MapPinIcon, Bell, BellOff, PenLine } from "lucide-react";
 import Link from "next/link";
-import { fetchRecentApplicationsByUser } from "@/app/actions";
-import { set } from "date-fns";
-import Header from "../header/Header";
+import { fetchRecentApplicationsByUser } from "../_actions/actions";
+import Header from "../../../_components/header/Header";
 import SkeletonCard from "./LoadSkeleton";
 
 const poppins = Poppins({

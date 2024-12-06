@@ -1,10 +1,10 @@
 "use client"
-import { registerUser } from "@/app/actions";
-import Upcoming from "@/app/_components/dashboard/Upcoming";
+import { checkUser } from "./_actions/actions";
+import Upcoming from "./_components/Upcoming";
 import Header from "@/app/_components/header/Header";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
-import Recents from "@/app/_components/dashboard/Recents";
+import Recents from "./_components/Recents";
 
 
 export default function Dashboard() {
@@ -14,7 +14,7 @@ export default function Dashboard() {
     router.push("/sign-in");
     return;
   }
-  registerUser(
+  checkUser(
     user.id,
     user.primaryEmailAddress?.emailAddress || '',
     user.fullName || ''

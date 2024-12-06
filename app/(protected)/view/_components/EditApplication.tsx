@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { updateApplication } from "@/app/actions";
+import { updateApplication } from "../_actions/actions";
 import { ApplicationData } from "@/lib/types";
 import { Edit } from "lucide-react";
 import { TheToaster } from "@/components/ui/use-toast";

@@ -6,11 +6,16 @@ import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { useEffect, useState } from "react";
 import {
   getUserByClerkId,
+} from "@/app/_actions/actions";
+
+import {
   setGithubId,
   fetchTotalApplicationsByUser,
   fetchTotalRoundsByUser,
   fetchUpcomingRoundsCountByUser,
-} from "@/app/actions";
+} from "./_actions/actions";
+
+
 import { useRouter } from "next/navigation";
 import GithubCalendar from "react-github-calendar";
 
