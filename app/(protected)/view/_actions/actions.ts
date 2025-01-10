@@ -53,7 +53,7 @@ export async function fetchRoundByApplicationId(applicationId: string) {
   try {
     const rounds = await prisma.round.findMany({
       where: { applicationId },
-      orderBy: { roundDateTime: "desc" },
+      orderBy: { roundDateTime: "asc" },
     });
 
     const currentTime = new Date();
