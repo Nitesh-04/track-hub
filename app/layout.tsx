@@ -3,6 +3,7 @@ import {
   ClerkProvider
 } from '@clerk/nextjs'
 import "./globals.css";
+import { Analytics } from '@vercel/analytics/next';
 
 
 export const metadata: Metadata = {
@@ -20,6 +21,7 @@ export default function RootLayout({
       <html lang="en">
         <body>
           {children}
+          <Analytics />
         </body>
       </html>
     </ClerkProvider>
