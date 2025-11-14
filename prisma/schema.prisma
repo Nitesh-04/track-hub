@@ -19,6 +19,23 @@ model User {
   updatedAt    DateTime      @updatedAt
 }
 
+model EmailCredential {
+  id           String   @id @default(uuid())
+  clerkid      String   
+  provider     String   @default("google")
+  accessToken  String
+  refreshToken String
+  scope        String
+  tokenType    String?
+  expiresAt    DateTime?
+  historyId    String? 
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([clerkid])
+}
+
+
 model Application {
   id            String   @id @default(uuid())
   companyName   String
