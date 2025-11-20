@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import { auth, currentUser } from "@clerk/nextjs/server";
+import { currentUser } from "@clerk/nextjs/server";
 import prisma from "@/utils/db";
 
 export async function GET(req: Request) {
@@ -116,6 +116,11 @@ export async function GET(req: Request) {
       },
     });
   }
+
+  await prisma.user.update({
+    where: { clerkid: prismaUser.clerkid },
+    data: { automatorEnabled: true },
+  })
 
 
   return NextResponse.redirect(`${process.env.NEXT_PUBLIC_BASE_URL}/dashboard?enabledAutomation=true`);

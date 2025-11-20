@@ -2,13 +2,27 @@
 
 import Header from "@/app/_components/header/Header";
 import { Button } from "@/components/ui/button";
-import { Link, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
+import { use, useEffect, useState } from "react";
+import { checkAutomatorEnabled } from "./_actions/actions";
 
 export default function EnableAutomationPage() {
 
     const handleClick = () => {
         window.location.href = "/api/auth/google/start";
     }
+
+    const [automatorEnabled, setAutomatorEnabled] = useState<boolean | null>(null);
+    
+    useEffect(() => {
+        async function fetchAutomatorStatus() {
+            const enabled = await checkAutomatorEnabled();
+            setAutomatorEnabled(enabled ?? null);
+        }
+        fetchAutomatorStatus();
+    }, []);
+
+
     return (
         <>
             <Header />
@@ -19,10 +33,14 @@ export default function EnableAutomationPage() {
                     </section>
 
                     <section className="flex flex-wrap items-center gap-4">
-                        <Button size="lg" className="gap-2 bg-[#001F3F]" onClick={handleClick}>
-                            <Mail className="h-4 w-4" />
-                            Connect Gmail
-                        </Button>
+                        {automatorEnabled ? (
+                            <span className="text-sm font-medium text-green-600">Gmail Automator is enabled on your account.</span>
+                        ) : (
+                            <Button size="lg" className="gap-2 bg-[#001F3F]" onClick={handleClick}>
+                                <Mail className="h-4 w-4" />
+                                Connect Gmail
+                            </Button>
+                        )}
                         <span className="text-xs text-muted-foreground">
                             OAuth 2.0 & granular readonly access. We never store your raw emails.
                         </span>

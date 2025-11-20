@@ -13,6 +13,7 @@ model User {
   email        String        @unique
   name         String
   githubid     String?
+  automatorEnabled Boolean       @default(false)
   applications Application[]
   rounds       Round[]
   createdAt    DateTime      @default(now())
