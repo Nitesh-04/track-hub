@@ -14,8 +14,13 @@ export async function POST(req: Request) {
   });
 
   if (!cred) {
-    return NextResponse.json({ error: "No credentials for user" }, { status: 400 });
+    return NextResponse.json(
+      { error: "No credentials for user" },
+      { status: 400 }
+    );
   }
+
+  // Refresh access token if expired
 
   let accessToken = cred.accessToken;
 
@@ -46,6 +51,7 @@ export async function POST(req: Request) {
     }
   }
 
+
   // Fetch history changes
   const historyRes = await fetch(
     `https://gmail.googleapis.com/gmail/v1/users/me/history?startHistoryId=${cred.historyId}`,
@@ -59,17 +65,15 @@ export async function POST(req: Request) {
 
   const historyJson = await historyRes.json();
 
-  await prisma.emailCredential.update({
-    where: { id: cred.id },
-    data: { historyId: historyId.toString() },
-  });
-
   if (!historyJson.history) {
     console.log("No new history");
     return NextResponse.json({ ok: true });
   }
 
+
   const messageIds = new Array<string>();
+
+  // Collect message IDs from history
 
   for (const record of historyJson.history) {
     if (record.messagesAdded) {
@@ -79,63 +83,53 @@ export async function POST(req: Request) {
     }
   }
 
-  for (const id of messageIds) {
-    const msgRes = await fetch(
-      `https://gmail.googleapis.com/gmail/v1/users/me/messages/${id}?format=full`,
-      {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      }
-    );
-
-    const msgJson = await msgRes.json();
-
-    const fromHeader = msgJson.payload.headers.find((h: any) => h.name === "From")?.value || "";
-    const subject = msgJson.payload.headers.find((h: any) => h.name === "Subject")?.value || "";
-    const body = extractBody(msgJson.payload);
-
-    // Filter based on sender / subject
-    // if (!shouldProcess(fromHeader, subject, body)) continue;
-
-    console.log(body);
-
-    // Parse job data
-    //const parsed = parseJobEmail({ fromHeader, subject, body });
 
 
-    // const app = await prisma.application.create({
-    //   data: {
-    //     companyName: parsed.company,
-    //     role: parsed.role,
-    //     location: parsed.location || "",
-    //     link: parsed.link || "",
-    //     userId: clerkid,
-    //   },
-    // });
+  // Fetch and process each message
 
-    // if (parsed.round) {
-    //   await prisma.round.create({
-    //     data: {
-    //       roundTitle: parsed.round.title,
-    //       roundDateTime: parsed.round.date,
-    //       venue: parsed.round.venue || "",
-    //       status: "upcoming",
-    //       applicationId: app.id,
-    //       userId: clerkid,
-    //     },
-    //   });
-    // }
-  }
+  for (const id of messageIds) 
+  {
+      const msgRes = await fetch(
+        `https://gmail.googleapis.com/gmail/v1/users/me/messages/${id}?format=full`,
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        }
+      );
 
-  await prisma.emailCredential.update({
-    where: { id: cred.id },
-    data: { historyId },
-  });
+      const msgJson = await msgRes.json();
 
-  return NextResponse.json({ success: true });
+      const fromHeader =
+        msgJson.payload.headers.find((h: any) => h.name === "From")?.value || "";
+      const subject =
+        msgJson.payload.headers.find((h: any) => h.name === "Subject")?.value ||
+        "";
+      const body = extractBody(msgJson.payload);
+
+      // Filter based on sender
+      if (!shouldProcess(fromHeader)) continue;
+      console.log(body);
+
+
+    }
+
+    await prisma.emailCredential.update({
+      where: { id: cred.id },
+      data: { historyId: historyId.toString() },
+    });
+
+    return NextResponse.json({ success: true });
 }
 
+
+
+
+
+
+// helper functions
+
 function extractBody(payload: any): string {
-  if (!payload.parts) return Buffer.from(payload.body.data || "", "base64").toString("utf8");
+  if (!payload.parts)
+    return Buffer.from(payload.body.data || "", "base64").toString("utf8");
 
   for (const part of payload.parts) {
     if (part.mimeType === "text/plain") {
@@ -145,30 +139,11 @@ function extractBody(payload: any): string {
   return "";
 }
 
-function shouldProcess(from: string, subject: string, body: string) {
-  const allowedSenders = [
-    "blazexnick04@gmail.com",
-    "jobs-noreply@linkedin.com",
-    "careers@", // partial match allowed
-  ];
+function shouldProcess(from: string): boolean {
+  const allowedSenders = ["blazexnick04@gmail.com"];
 
-  if (!allowedSenders.some(sender => from.toLowerCase().includes(sender)))
-    return false;
-
-  if (
-    !subject.toLowerCase().match(/interview|assessment|round|selected|shortlist/)
-  )
+  if (!allowedSenders.some((sender) => from.toLowerCase().includes(sender)))
     return false;
 
   return true;
 }
-
-// function parseJobEmail({ fromHeader, subject, body }) {
-//   return {
-//     company: extractCompany(subject, body),
-//     role: extractRole(subject, body),
-//     link: extractLink(body),
-//     location: null,
-//     round: extractRoundInfo(body),
-//   };
-// }
