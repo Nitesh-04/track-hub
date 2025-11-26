@@ -4,7 +4,6 @@ generator client {
 
 datasource db {
   provider = "cockroachdb"
-  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -13,11 +12,29 @@ model User {
   email        String        @unique
   name         String
   githubid     String?
+  automatorEnabled Boolean       @default(false)
   applications Application[]
   rounds       Round[]
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
 }
+
+model EmailCredential {
+  id           String   @id @default(uuid())
+  clerkid      String   
+  provider     String   @default("google")
+  accessToken  String
+  refreshToken String
+  scope        String
+  tokenType    String?
+  expiresAt    DateTime?
+  historyId    String? 
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([clerkid])
+}
+
 
 model Application {
   id            String   @id @default(uuid())

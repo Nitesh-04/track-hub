@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import { sendEventReminder } from '@/utils/email';
-
-const prisma = new PrismaClient();
+import prisma from '@/utils/db';
 
 export async function GET(request: Request) {
   if (request.headers.get('Authorization') !== `Bearer ${process.env.CRON_SECRET}`) {
