@@ -40,7 +40,7 @@ export async function POST(req: Request) {
 
   // Trigger worker to fetch new emails (job system)
 
-  fetch(`${process.env.INTERNAL_WORKER_URL}/api/gmail/worker`, {
+  await fetch(`${process.env.INTERNAL_WORKER_URL}/api/gmail/worker`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -327,10 +327,15 @@ export async function POST(req: Request) {
 
   }
 
-  await prisma.emailCredential.update({
-    where: { id: cred.id },
-    data: { historyId: historyId.toString() },
-  });
+  const oldId = Number(cred.historyId);
+  const newId = Number(historyId);
+
+  if (isNaN(oldId) || newId > oldId) {
+    await prisma.emailCredential.update({
+      where: { id: cred.id },
+      data: { historyId: newId.toString() },
+    });
+  }
 
   return NextResponse.json({ success: true });
 }
