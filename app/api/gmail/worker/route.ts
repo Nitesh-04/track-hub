@@ -261,6 +261,25 @@ export async function POST(req: Request) {
             continue;
           }
 
+          const existingApplication = await prisma.application.findFirst({
+            where: {
+              companyName: {
+                contains: roundResponse.companyName ?? "",
+                mode: "insensitive",
+              },
+              userId: cred.clerkid,
+            },
+            select: { id: true },
+          });
+
+          if (!existingApplication) {
+            console.warn(
+              "No application found for",
+              roundResponse.companyName
+            );
+            continue;
+          }
+
           console.log("Processing attachments")
 
           const userNamePresent = await excelAttachmentContainsUserName(
@@ -276,22 +295,6 @@ export async function POST(req: Request) {
           }
 
           console.log("User name found in Excel attachment. Proceeding with round creation.");
-
-          const existingApplication = await prisma.application.findFirst({
-            where: {
-              companyName: roundResponse.companyName,
-              userId: cred.clerkid,
-            },
-            select: { id: true },
-          });
-
-          if (!existingApplication) {
-            console.warn(
-              "No application found for round email",
-              roundResponse.companyName
-            );
-            continue;
-          }
 
           const parsedRoundDate = roundResponse.roundDateTime
             ? new Date(roundResponse.roundDateTime)
@@ -327,15 +330,10 @@ export async function POST(req: Request) {
 
   }
 
-  const oldId = Number(cred.historyId);
-  const newId = Number(historyId);
-
-  if (isNaN(oldId) || newId > oldId) {
-    await prisma.emailCredential.update({
-      where: { id: cred.id },
-      data: { historyId: newId.toString() },
-    });
-  }
+  await prisma.emailCredential.update({
+    where: { id: cred.id },
+    data: { historyId: historyId.toString() },
+  });
 
   return NextResponse.json({ success: true });
 }
