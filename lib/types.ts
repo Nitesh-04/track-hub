@@ -43,6 +43,15 @@ export type RoundData = {
   status: "upcoming" | "completed";
 };
 
+export interface RoundEmail {
+  companyName: string;
+  roundTitle: string;
+  roundDateTime: number;
+  venue: string;
+  roundLink: string;
+  status: "upcoming" | "completed";
+}
+
 export type RoundWithApplication = {
   id: string;
   roundTitle: string;
