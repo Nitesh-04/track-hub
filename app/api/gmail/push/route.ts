@@ -42,7 +42,10 @@ export async function POST(req: Request) {
 
   fetch(`${process.env.INTERNAL_WORKER_URL}/api/gmail/worker`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.INTERNAL_WORKER_TOKEN ?? ""}`,
+    },
     body: JSON.stringify({
       clerkid: prismaUser.clerkid,
       historyId: historyId.toString(),

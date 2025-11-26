@@ -29,7 +29,7 @@ export default function EnableAutomationPage() {
             <main className="md:px-14 md:py-2 py-0 px-6 pt-2 mt-16 max-w-3xl mx-auto">
                 <div className="space-y-8 text-[#001F3F]">
                     <section className="space-y-3">
-                        <h1 className="text-3xl text-[#001F3F] font-semibold tracking-tight">Introducing TrackHub Automator</h1>
+                        <h1 className="text-3xl text-[#001F3F] font-semibold tracking-tight">Introducing TrackHub Automator Beta</h1>
                     </section>
 
                     <section className="flex flex-wrap items-center gap-4">
